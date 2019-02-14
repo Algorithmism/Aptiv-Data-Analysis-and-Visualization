@@ -6,7 +6,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'andromeda',
-      user:     'postgres',
+      user: 'postgres',
       password: 'pass'
     },
     pool: {
@@ -17,11 +17,11 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   },
- production: {
+  production: {
     client: 'postgresql',
     connection: {
       database: 'andromeda',
-      user:     'postgres',
+      user: 'postgres',
       password: 'pass'
     },
     pool: {
