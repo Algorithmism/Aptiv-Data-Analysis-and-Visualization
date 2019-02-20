@@ -21,7 +21,7 @@ exports.seed = function (knex, Promise) {
           id: "213e721f-f5c0-436c-9549-1f3521515345",
           name: "My Vehicle A",
           created_at: "2019-01-08 13:22:18.293-05",
-          updated_at: "2019-01-08 13:2 2:18.293-05"
+          updated_at: "2019-01-08 13:22:18.293-05"
         }
       ]);
   });
