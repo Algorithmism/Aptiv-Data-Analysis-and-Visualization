@@ -8,3 +8,6 @@
 
 #in dev if you mess up a migrations file, just rollback
   #in prod just make a new migration file so you dont risk losing data
+
+#what is a migration file?
+  #it does all the table modifications(create, add columns)
