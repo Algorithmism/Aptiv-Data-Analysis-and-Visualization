@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'andromeda',
+      database: 'localhost',
       user: 'postgres',
       password: 'pass'
     },
