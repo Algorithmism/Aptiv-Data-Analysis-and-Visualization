@@ -1,0 +1,7 @@
+# to add a new api route
+  #make migration file
+  #make seed file
+  #make model file
+  #edit server
+    #add route
+    #add const at the top for table
