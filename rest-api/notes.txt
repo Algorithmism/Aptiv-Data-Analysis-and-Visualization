@@ -5,3 +5,6 @@
   #edit server
     #add route
     #add const at the top for table
+
+#in dev if you mess up a migrations file, just rollback
+  #in prod just make a new migration file so you dont risk losing data
