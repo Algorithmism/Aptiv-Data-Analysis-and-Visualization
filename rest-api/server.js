@@ -3,7 +3,9 @@ const Knex = require('knex');
 const { Model } = require('objection');
 const dbConfig = require('./knexfile');
 const { Vehicles } = require('./models/vehicles');
+const { Applications } = require('./models/applications');
 
+//server settings
 const server = Hapi.server({
   port: 8081,
   host: 'localhost',
@@ -18,6 +20,7 @@ const server = Hapi.server({
   }
 });
 
+//gets all vehicles
 server.route({
   method: 'GET',
   path: '/vehicles',
@@ -35,6 +38,7 @@ server.route({
   }
 });
 
+//gets a vehicle via an ID
 server.route({
   method: 'GET',
   path: '/vehicles/{vehicle_id}',
@@ -53,6 +57,45 @@ server.route({
     description: 'Gets a vehicle from the database by ID'
   }
 });
+
+//get request for applications
+server.route({
+  method: 'GET',
+  path: '/applications',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await Applications
+      .query()
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the applications from the database'
+  }
+});
+
+//gets an application via an ID
+server.route({
+  method: 'GET',
+  path: '/applications/{application_id}',
+  handler: async (request, h) => {
+    // NOTE: Debug is optional - prints SQL command and results into stdout
+    // the request object allows us to get info about the request (like URL params as in this case)
+
+    const response = await Applications
+      .query()
+    .findById(request.params.application_id)
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets an application from the database by ID'
+  }
+});
+
 
 server.route({
   method: 'GET',
