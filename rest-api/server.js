@@ -115,11 +115,6 @@ server.route({
   }
 });
 
-
-//this is not working rn, need to figure out how to find by the vehicle id
-//this is becasuse vehicle id isnt a type UUID, its a string, should I make it
-//a uuid?
-
 //gets an active_screen via an ID
 server.route({
   method: 'GET',
@@ -140,7 +135,6 @@ server.route({
   }
 });
 
-
 //hello world get request
 server.route({
   method: 'GET',
@@ -150,6 +144,7 @@ server.route({
   }
 });
 
+//another hello world example
 server.route({
   method: 'GET',
   path: '/names/{name}',
