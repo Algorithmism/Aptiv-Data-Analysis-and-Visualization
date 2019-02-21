@@ -120,18 +120,17 @@ server.route({
 //this is becasuse vehicle id isnt a type UUID, its a string, should I make it
 //a uuid?
 
-/*
 //gets an active_screen via an ID
 server.route({
   method: 'GET',
-  path: '/active_screens/{vehicle_id}',
+  path: '/active_screens/findByVehicleID/{vehicle_id}',
   handler: async (request, h) => {
     // NOTE: Debug is optional - prints SQL command and results into stdout
     // the request object allows us to get info about the request (like URL params as in this case)
 
     const response = await Active_Screens
       .query()
-    .where(Active_Screens.jsonColumn:vehicle_id,'=',request.params.vehicle_id)
+    .where('vehicle_id',request.params.vehicle_id)
       .debug();
 
     return response;
@@ -140,7 +139,7 @@ server.route({
     description: 'Gets an active_screen from the database by vehicle ID'
   }
 });
-*/
+
 
 //hello world get request
 server.route({
