@@ -11,3 +11,5 @@
 
 #what is a migration file?
   #it does all the table modifications(create, add columns)
+
+#table relation needs to be defined in migrations
