@@ -8,6 +8,7 @@ figcaption, h1, h2, h3, ul, li, body, div, p, img {
 }
 
 .Collapsible {
+    border: 10px;
     border-style: dotted;
     border: aquamarine;
     text-align: left;
