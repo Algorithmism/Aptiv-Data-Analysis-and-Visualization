@@ -8,6 +8,7 @@
     "lorem-ipsum": "^1.0.6",
     "moment": "^2.24.0",
     "react": "^16.8.1",
+    "react-collapsible": "^2.6.0",
     "react-dom": "^16.8.1",
     "react-scripts": "2.1.5",
     "react-virtualized": "^9.21.0"
