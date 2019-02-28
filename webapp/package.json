@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.13.6",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "lodash": "^4.17.11",
     "lorem-ipsum": "^1.0.6",
+    "mauerwerk": "^2.0.2",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "react": "^16.8.1",
