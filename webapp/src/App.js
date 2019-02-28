@@ -8,6 +8,7 @@ class App extends Component {
     return (
       <div className="apper">
         <Collap />
+        <Collap />
       </div>
     );
   }
