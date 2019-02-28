@@ -5,6 +5,7 @@ const dbConfig = require('./knexfile');
 const { Vehicles } = require('./models/vehicles');
 const { Applications } = require('./models/applications');
 const { Active_Screens } = require('./models/active_screens');
+const { Button_Presses } = require('./models/button_presses');
 
 //server settings
 const server = Hapi.server({
@@ -134,6 +135,48 @@ server.route({
     description: 'Gets an active_screen from the database by vehicle ID'
   }
 });
+
+//get request for button_presses Table
+server.route({
+  method: 'GET',
+  path: '/button_presses',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await Button_Presses
+      .query()
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the button_presses from the database'
+  }
+});
+
+//get request for button_presses via an id
+server.route({
+  method: 'GET',
+  path: '/button_presses/findByVehicleID/{vehicle_id}',
+  handler: async (request, h) => {
+    // NOTE: Debug is optional - prints SQL command and results into stdout
+    // the request object allows us to get info about the request (like URL params as in this case)
+
+    const response = await Button_Presses
+      .query()
+    .where('vehicle_id',request.params.vehicle_id)
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets an button press from the database by vehicle ID'
+  }
+});
+
+
+
+
 
 //hello world get request
 server.route({
