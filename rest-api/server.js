@@ -6,6 +6,7 @@ const { Vehicles } = require('./models/vehicles');
 const { Applications } = require('./models/applications');
 const { Active_Screens } = require('./models/active_screens');
 const { Button_Presses } = require('./models/button_presses');
+const { Summary_Timeline } = require('./models/summary_timeline');
 
 //server settings
 const server = Hapi.server({
@@ -174,7 +175,23 @@ server.route({
   }
 });
 
+//get request for summary_timeline table
+server.route({
+  method: 'GET',
+  path: '/summary_timeline',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
 
+    const response = await Summary_Timeline
+      .query()
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the data from the summary_timeline database'
+  }
+});
 
 
 
