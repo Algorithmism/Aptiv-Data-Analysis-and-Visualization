@@ -195,6 +195,64 @@ server.route({
 
 
 
+
+//helper function for sorting json object array
+function predicateBy(prop){
+   return function(a,b){
+      if( a[prop] > b[prop]){
+          return 1;
+      }else if( a[prop] < b[prop] ){
+          return -1;
+      }
+      return 0;
+   }
+}
+
+//begining of data massaging
+server.route({
+  method: 'GET',
+  path: '/create_summary_timeline',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+    var all_data = [];
+
+    button_presses = await Button_Presses.query().debug();
+
+    active_screens = await Active_Screens.query().debug();
+
+    for(var i = 0; i < button_presses.length; i++) {
+      var obj = button_presses[i];
+      all_data.push(obj)
+
+      console.log(obj);
+    }
+
+    for(var i = 0; i < active_screens.length; i++) {
+      var obj = active_screens[i];
+      all_data.push(obj)
+
+      console.log(obj);
+    }
+
+
+
+    all_data.sort( predicateBy("timestamp") );
+
+
+    return all_data;
+
+
+
+    //return response;
+  },
+  options: {
+    description: 'Gets all the data from the summary_timeline database'
+  }
+});
+
+
+
+
 //hello world get request
 server.route({
   method: 'GET',
