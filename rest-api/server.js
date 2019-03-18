@@ -125,24 +125,24 @@ server.route({
 
 
 
-    sql = "insert into timeline_table(app_name, activity_name, vehicle_id, event_type, timestamp) values (
-      select screen_name, button_name, vehicle_id, 'button_press', timestamp from button_presses
+    sql = "insert into timeline_table(app_name, screen_name, event, vehicle_id, event_type, timestamp) 
+      select null, screen_name, button_name, vehicle_id, 'button_press', timestamp from button_presses
         where timestamp > (select max(timestamp) from timeline_table)
       union
-      select app_name, screen_name, vehicle_id, 'active_screen', timestamp from active_screens
+      select app_name, screen_name, null, vehicle_id, 'active_screen', timestamp from active_screens
         where timestamp > (select max(timestamp) from timeline_table)
       union
-      select app_name, new_state, vehicle_id, 'app_state_change', timestamp from app_state_changes
+      select app_name, screen_name, new_state, vehicle_id, 'app_state_change', timestamp from app_state_changes
         where timestamp > (select max(timestamp) from timeline_table)
       union
-      select null, null ,vehicle_id, 'ignition_cycle', timestamp from button_presses
+      select null, null ,null, vehicle_id, 'ignition_cycle', timestamp from button_presses
         where timestamp > (select max(timestamp) from timeline_table)
       order by timestamp
-    ) ";
+     ";
 
 
     const response = await 
-      .query()
+      .query(sql)
       .debug();
 
     return response;
