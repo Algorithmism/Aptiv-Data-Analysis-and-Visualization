@@ -7,13 +7,20 @@ import { Icon } from 'antd'
 import data from './data'
 import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
+import AccList from '../CollapsibleComp/dynamicdropdown.js';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
   <div
     className="cell"
     style={{ backgroundImage: css, cursor: !maximized ? 'pointer' : 'auto' }}
     onClick={!maximized ? toggle : undefined}>
+    
     <Fade show={maximized} delay={maximized ? 400 : 0}>
+      { name == "App State Changes" &&
+        <AccList />
+      }
+      
+      }
       <div className="details">
         <Slug delay={600}>
           
@@ -32,6 +39,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
       leave={{ opacity: 0, transform: 'translate3d(0,-50px,0)' }}
       delay={maximized ? 0 : 400}>
       <div className="default">{name}</div>
+      
     </Fade>
   </div>
 )
@@ -70,11 +78,11 @@ class SearchComp extends Component {
           // Space between elements
           margin={this.state.margin}
           // Removes the possibility to scroll away from a maximized element
-          lockScroll={false}
+          lockScroll={true}
           // Delay when active elements (blown up) are minimized again
           closeDelay={400}>
           {(data, maximized, toggle) => (
-            <Cell {...data} maximized={maximized} toggle={toggle} />
+            <Cell {...data} maximized={maximized} toggle={toggle} />        
           )}
         </Grid>
       </div>

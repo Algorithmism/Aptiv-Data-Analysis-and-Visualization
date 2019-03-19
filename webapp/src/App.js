@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import SkeletonVList from './components/SkeletonVList.js';
-//import Collap from './components/collapslist';
+//import Collap from './components/CollapsibleComp/collapslist';
 //import AccList from './components/CollapsibleComp/dynamicdropdown';
 import SearchApp from './components/SearchComp/index.js';
 import './App.css';
