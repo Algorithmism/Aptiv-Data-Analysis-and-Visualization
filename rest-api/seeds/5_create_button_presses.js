@@ -3,27 +3,28 @@
 
 exports.seed = function (knex, Promise) {
   // Deletes ALL existing entries
-  return knex("active_screens").del()
+  return knex("button_presses").del()
     .then(function () {
       // Inserts seed entries
-      return knex("active_screens").insert([
+      return knex("button_presses").insert([
+        //screen_name,button_name,vehicle_id,timestamp
         {
-          application_id: "7e67ac23-5230-4c1e-92ad-a3df62918160",
           screen_name: "com.delphihome.aptiv",
-          vehicle_id: "6f1c16d1-4ca8-4621-a72a-cb6add087151",
-          timestamp: "2019-01-08 13:22:27-05"
-        },
-        {
-          application_id: "99f63c90-3bc3-44d7-a1e7-9abeda0d5dfd",
-          screen_name: "com.mediaplayer.android",
+          button_name: "my button y",
           vehicle_id: "6f1c16d1-4ca8-4621-a72a-cb6add087151",
           timestamp: "2019-01-08 13:22:24-05"
         },
         {
-          application_id: "184f012a-462c-4a00-bdac-24c33040667b",
-          screen_name: "radio",
+          screen_name: "com.delphihome.aptiv",
+          button_name: "my button x",
           vehicle_id: "6f1c16d1-4ca8-4621-a72a-cb6add087151",
           timestamp: "2019-01-08 13:22:21-05"
+        },
+        {
+          screen_name: "com.android.systemui/null",
+          button_name: "Home",
+          vehicle_id: "19847f57-65d7-4970-8117-4b1b57d2d1ab",
+          timestamp: "2019-01-08 10:08:07-05"
         }
       ]);
   });
