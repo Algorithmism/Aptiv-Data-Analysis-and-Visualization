@@ -5,19 +5,23 @@ const paragraph = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Even
 
 const data = [
     {
-      title: 'Pricing plans',
+      title: 'Set 1',
       paragraph
     },
     {
-      title: 'How to apply',
+      title: 'Set 2',
       paragraph
     },
     {
-      title: 'Purchasing process',
+      title: 'Set 3',
       paragraph
     },
     {
-      title: 'Usage guides',
+      title: 'Set 4',
+      paragraph
+    },
+    {
+      title: 'Set 5',
       paragraph
     }
   ]
