@@ -8,6 +8,7 @@ import data from './data'
 import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
+import Tabler from '../GoogleComp/Tabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
   <div
@@ -18,6 +19,9 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     <Fade show={maximized} delay={maximized ? 400 : 0}>
       { name == "App State Changes" &&
         <AccList />
+      }
+      { name == "Timeline of Events" &&
+        <Tabler />
       }
       
       }
