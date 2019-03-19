@@ -6,6 +6,7 @@ const { Vehicles } = require('./models/vehicles');
 const { Applications } = require('./models/applications');
 const { Active_Screens } = require('./models/active_screens');
 const { Button_Presses } = require('./models/button_presses');
+const { App_State_Changes } = require('./models/app_state_changes');
 const { Summary_Timeline } = require('./models/summary_timeline');
 
 //server settings
@@ -220,37 +221,95 @@ server.route({
 
     active_screens = await Active_Screens.query().debug();
 
+    //console.log(button_presses);
+
     for(var i = 0; i < button_presses.length; i++) {
       var obj = button_presses[i];
-      all_data.push(obj)
-
-      console.log(obj);
+      all_data.push(obj);
     }
 
     for(var i = 0; i < active_screens.length; i++) {
       var obj = active_screens[i];
-      all_data.push(obj)
-
-      console.log(obj);
+      all_data.push(obj);
     }
 
-
-
     all_data.sort( predicateBy("timestamp") );
+    //console.log(all_data);
 
 
-    return all_data;
 
+    for (var i = 0; i < all_data.length; i++){
+      let ev = all_data[i];
+      let event_name = null;
+      let event = null;
+	    let application_id = null;
+
+	    if ('application_id' in ev){
+	  	  application_id = ev.application_id;
+	    }
+
+      if('screen_name' in ev) {
+        /* active_screen */
+        event_name = 'Screen Change';
+        event = ev.screen_name;
+      }
+
+      if('button_name' in ev) { /* button press */
+        event_name = 'Button Press';
+        event = ev.button_name;
+      }
+      if('event_name' in ev) {
+        /* app_state_change */
+        evet = ev.event_name;
+        if(event.event_name === 'STARTED')
+          eventName = 'Application launched';
+        if(event.event_name === 'RESUMED')
+          eventName = 'Application in Foreground';
+        if(event.event_name === 'PAUSED')
+          eventName = 'Application Running In the Background';
+        if(event.event_name === 'STOPPED')
+          eventName = 'Application closed';
+      }
+
+      await Summary_Timeline
+      .query()
+      .insert({
+      event_name: event_name,
+      event: event,
+      timestamp: ev.timestamp,
+      vehicle_id: ev.vehicle_id,
+	     application_id: application_id
+      });
+
+    }
+    return 1;
 
 
     //return response;
+  }
+
+});
+
+
+//clear summary timeline for // DEBUG:
+//get request for summary_timeline table
+server.route({
+  method: 'GET',
+  path: '/clear_summary_timeline',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await Summary_Timeline
+      .query()
+      .delete()
+      .debug();
+
+    return response;
   },
   options: {
     description: 'Gets all the data from the summary_timeline database'
   }
 });
-
-
 
 
 //hello world get request
@@ -293,3 +352,6 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
+
+
+//order by for sorting by timestamp
