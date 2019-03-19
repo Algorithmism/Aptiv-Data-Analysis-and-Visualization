@@ -1,0 +1,28 @@
+html, body, header, footer, hgroup, nav, article, section, figure,
+figcaption, h1, h2, h3, ul, li, body, div, p, img {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    border: 0;
+}
+
+.Collapsible {
+    border: 10px;
+    border-style: dotted;
+    border: aquamarine;
+    text-align: left;
+    background-color: blue; 
+    margin-left: 20em;
+    margin-right: 20em;
+    color: white;
+}
+.Collapsible__contentInner {
+    text-decoration: blue;
+    border: 1em;
+    border-color: brown;
+    background-color: violet;
+    color: aqua;
+    text-align: center;
+
+}
