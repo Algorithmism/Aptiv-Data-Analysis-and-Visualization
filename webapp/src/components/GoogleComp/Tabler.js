@@ -9,24 +9,53 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 
-class VehicleList extends React.Component{
+
+class EventList extends React.Component{
+
   state = {
-    vehicles: [],
+    events: [],
   };
 
   componentDidMount() {
-    axios.get('http://localhost:8088/vehicles').then(response => {
+    axios.get('http://localhost:8081/summary_timeline').then(response => {
       console.log(response);
-      this.setState({vehicles: response.data})
+      this.setState({events: response.data})
     });
   }
-  render() {
-    console.log(this.state.vehicles);
+  render(props) {
+    //const { classes } = props;
+    console.log(this.state.events);
     //return this.state.vehicles;
     return (
-      <ul>
-        {this.state.vehicles.map(vehicle => <li>{vehicle.name}</li>)}
-      </ul>
+      <Paper >
+        <Table >
+          <TableHead>
+            <TableRow>
+              <TableCell>Event Name</TableCell>
+              <TableCell align="right">Event</TableCell>
+              <TableCell align="right">Timestamp</TableCell>
+              <TableCell align="right">Vehicle ID</TableCell>
+              <TableCell align="right">Application ID</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {this.state.events.map(event =>
+            <TableRow key = {event.id}>
+            <TableCell component="th" scope="row">
+              {event.event_name}
+            </TableCell>
+            <TableCell align="right">{event.event}</TableCell>
+            <TableCell align="right">{event.timestamp}</TableCell>
+            <TableCell align="right">{event.vehicle_id}</TableCell>
+            <TableCell align="right">{event.application_id}</TableCell>
+            </TableRow>)}
+          </TableBody>
+        </Table>
+      </Paper>
+
+
+
+
     )
   }
 }
@@ -61,10 +90,10 @@ const rows = [
 ];
 */
 function SimpleTable(props) {
-  const { classes } = props;
+
 
   return (
-    <VehicleList />
+    <EventList/>
     /*
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -99,5 +128,7 @@ function SimpleTable(props) {
 SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+
 
 export default withStyles(styles)(SimpleTable);
