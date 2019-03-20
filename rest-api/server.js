@@ -8,6 +8,7 @@ const { Active_Screens } = require('./models/active_screens');
 const { Button_Presses } = require('./models/button_presses');
 const { App_State_Changes } = require('./models/app_state_changes');
 const { Summary_Timeline } = require('./models/summary_timeline');
+const { App_Usages } = require('./models/app_usages');
 
 //server settings
 const server = Hapi.server({
@@ -23,6 +24,18 @@ const server = Hapi.server({
     }
   }
 });
+
+//helper function for sorting json object array
+function predicateBy(prop){
+   return function(a,b){
+      if( a[prop] > b[prop]){
+          return 1;
+      }else if( a[prop] < b[prop] ){
+          return -1;
+      }
+      return 0;
+   }
+}
 
 //gets all vehicles
 server.route({
@@ -194,18 +207,6 @@ server.route({
   }
 });
 
-//helper function for sorting json object array
-function predicateBy(prop){
-   return function(a,b){
-      if( a[prop] > b[prop]){
-          return 1;
-      }else if( a[prop] < b[prop] ){
-          return -1;
-      }
-      return 0;
-   }
-}
-
 //begining of data massaging
 server.route({
   method: 'GET',
@@ -287,9 +288,7 @@ server.route({
 
 });
 
-
 //clear summary timeline for // DEBUG:
-//get request for summary_timeline table
 server.route({
   method: 'GET',
   path: '/clear_summary_timeline',
@@ -309,6 +308,35 @@ server.route({
 });
 
 
+//get request for app_usages table
+server.route({
+  method: 'GET',
+  path: '/app_usages',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await App_Usages
+      .query()
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the data from the app_usages database'
+  }
+});
+
+
+
+
+
+
+
+
+
+
+//////////EXAMPLE API CALLS/////////
+
 //hello world get request
 server.route({
   method: 'GET',
@@ -326,7 +354,10 @@ server.route({
     return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
   }
 });
+////////////////////////////////////
 
+
+/////////NOT API CALLS/////////////
 const init = async () => {
   // init database & ORM
   const knexRunTime = Knex(dbConfig['development']);
@@ -349,6 +380,6 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
-
+///////////////////////////////////
 
 //order by for sorting by timestamp
