@@ -12,6 +12,9 @@ import axios from 'axios';
 
 class EventList extends React.Component{
 
+  EventList(props){
+    this.props = props
+  }
 
   state = {
     events: [],
@@ -23,16 +26,15 @@ class EventList extends React.Component{
       this.setState({events: response.data})
     });
   }
-  render(props) {
-    const { classes } = this.props;
+  render() {
+    //const { classes } = this.props;
     console.log(this.state.events);
     //return this.state.vehicles;
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
+      <Paper >
+        <Table >
           <TableHead>
             <TableRow>
-            <TableCell>ID</TableCell>
               <TableCell>Event Name</TableCell>
               <TableCell align="right">Event</TableCell>
               <TableCell align="right">Timestamp</TableCell>
@@ -44,9 +46,8 @@ class EventList extends React.Component{
           {this.state.events.map(event =>
             <TableRow key = {event.id}>
             <TableCell component="th" scope="row">
-              {event.id}
+              {event.event_name}
             </TableCell>
-            <TableCell align="right">{event.event_name}</TableCell>
             <TableCell align="right">{event.event}</TableCell>
             <TableCell align="right">{event.timestamp}</TableCell>
             <TableCell align="right">{event.vehicle_id}</TableCell>
@@ -92,7 +93,7 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 */
-function SimpleTable() {
+function SimpleTable(props) {
 
 
   return (
@@ -128,10 +129,10 @@ function SimpleTable() {
   );
 }
 
-EventList.propTypes = {
+SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 
-export default withStyles(styles)(EventList);
+export default withStyles(styles)(SimpleTable);
