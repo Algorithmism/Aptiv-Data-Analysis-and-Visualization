@@ -9,13 +9,14 @@ import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
+import All_Vehicles from '../GoogleComp/All_Vehicles';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
   <div
     className="cell"
     style={{ backgroundImage: css, cursor: !maximized ? 'pointer' : 'auto' }}
     onClick={!maximized ? toggle : undefined}>
-    
+
     <Fade show={maximized} delay={maximized ? 400 : 0}>
       { name == "App State Changes" &&
         <AccList />
@@ -23,11 +24,13 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
       { name == "Timeline of Events" &&
         <Tabler />
       }
-      
+      { name.toLowerCase() == "all active cars in system" &&
+        <All_Vehicles />
       }
+
       <div className="details">
         <Slug delay={600}>
-          
+
           <div className="close">
             <Icon type="close" style={{ cursor: 'pointer' }} onClick={toggle} />
           </div>
@@ -43,7 +46,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
       leave={{ opacity: 0, transform: 'translate3d(0,-50px,0)' }}
       delay={maximized ? 0 : 400}>
       <div className="default">{name}</div>
-      
+
     </Fade>
   </div>
 )
@@ -86,7 +89,7 @@ class SearchComp extends Component {
           // Delay when active elements (blown up) are minimized again
           closeDelay={400}>
           {(data, maximized, toggle) => (
-            <Cell {...data} maximized={maximized} toggle={toggle} />        
+            <Cell {...data} maximized={maximized} toggle={toggle} />
           )}
         </Grid>
       </div>
