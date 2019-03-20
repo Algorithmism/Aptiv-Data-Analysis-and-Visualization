@@ -12,6 +12,10 @@ import axios from 'axios';
 
 class EventList extends React.Component{
 
+  EventList(props){
+    this.props = props
+  }
+
   state = {
     events: [],
   };
@@ -22,8 +26,8 @@ class EventList extends React.Component{
       this.setState({events: response.data})
     });
   }
-  render(props) {
-    //const { classes } = props;
+  render() {
+    //const { classes } = this.props;
     console.log(this.state.events);
     //return this.state.vehicles;
     return (
