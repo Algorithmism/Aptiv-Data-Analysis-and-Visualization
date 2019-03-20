@@ -118,7 +118,6 @@ server.route({
   }
 });
 
-
 //gets an active_screen via an ID
 server.route({
   method: 'GET',
