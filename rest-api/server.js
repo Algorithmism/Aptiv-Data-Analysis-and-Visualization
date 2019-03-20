@@ -194,9 +194,6 @@ server.route({
   }
 });
 
-
-
-
 //helper function for sorting json object array
 function predicateBy(prop){
    return function(a,b){
