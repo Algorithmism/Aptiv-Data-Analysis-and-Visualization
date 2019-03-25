@@ -90,7 +90,7 @@ server.route({
 
     const response = await Applications
       .query()
-    .findById(request.params.application_id)
+      .findById(request.params.application_id)
       .debug();
 
     return response;
@@ -312,6 +312,18 @@ server.route({
   }
 });
 
+//hello world get request
+server.route({
+  method: 'GET',
+  path: '/app_state_changes',
+  handler: (request, h) => {
+    const response = await App_State_Changes
+      .query()
+      .eager('application');
+    
+    return response;
+  }
+});
 
 //hello world get request
 server.route({
