@@ -32,8 +32,7 @@ server.route({
     //NOTE: Debug is optional - prints SQL command and results into stdout
 
     const response = await Vehicles
-      .query()
-      .debug();
+      .tablename();
 
     return response;
   },
