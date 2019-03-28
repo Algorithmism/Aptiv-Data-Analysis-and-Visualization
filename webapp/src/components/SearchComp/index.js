@@ -24,7 +24,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         <Tabler />
       }
       
-      }
+      
       <div className="details">
         <Slug delay={600}>
           
