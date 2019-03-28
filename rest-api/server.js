@@ -55,6 +55,28 @@ server.route({
   }
 });
 
+
+
+//gets all vehicles
+server.route({
+  method: 'GET',
+  path: '/vehicles_test',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await Vehicles
+      .raw('select * from vehicles').debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the vehicles from the database'
+  }
+});
+
+
+
+
 //gets a vehicle via an ID
 server.route({
   method: 'GET',
@@ -150,6 +172,26 @@ server.route({
     description: 'Gets an active_screen from the database by vehicle ID'
   }
 });
+
+
+//get request for app_state_changes Table
+server.route({
+  method: 'GET',
+  path: '/app_state_changes',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await App_State_Changes
+      .query()
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the app_state_changes from the database'
+  }
+});
+
 
 //get request for button_presses Table
 server.route({
