@@ -7,58 +7,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import axios from 'axios';
-
-
-class EventList extends React.Component{
-
-  EventList(props){
-    this.props = props
-  }
-
-  state = {
-    events: [],
-  };
-
-  componentDidMount() {
-    axios.get('http://localhost:8081/summary_timeline').then(response => {
-      console.log(response);
-      this.setState({events: response.data})
-    });
-  }
-  render() {
-    //const { classes } = this.props;
-    console.log(this.state.events);
-    //return this.state.vehicles;
-    return (
-      <Paper >
-        <Table >
-          <TableHead>
-            <TableRow>
-              <TableCell>Event Name</TableCell>
-              <TableCell align="right">Event</TableCell>
-              <TableCell align="right">Timestamp</TableCell>
-              <TableCell align="right">Vehicle ID</TableCell>
-              <TableCell align="right">Application ID</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {this.state.events.map(event =>
-            <TableRow key = {event.id}>
-            <TableCell component="th" scope="row">
-              {event.event_name}
-            </TableCell>
-            <TableCell align="right">{event.event}</TableCell>
-            <TableCell align="right">{event.timestamp}</TableCell>
-            <TableCell align="right">{event.vehicle_id}</TableCell>
-            <TableCell align="right">{event.application_id}</TableCell>
-            </TableRow>)}
-          </TableBody>
-        </Table>
-      </Paper>
-    )
-  }
-}
 
 const styles = theme => ({
   root: {
@@ -77,27 +25,6 @@ function createData(name, calories, fat, carbs, protein) {
   return { id, name, calories, fat, carbs, protein };
 }
 
-SimpleTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-
-
-export default withStyles(styles)(SimpleTable);
-
-
-
-
-
-
-
-
-
-/*
-const rows = VehicleList;
-console.log(rows);
-*/
-/*
 const rows = [
   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
@@ -107,11 +34,9 @@ const rows = [
 ];
 
 function SimpleTable(props) {
-
+  const { classes } = props;
 
   return (
-    <EventList/>
-    
     <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
@@ -129,7 +54,7 @@ function SimpleTable(props) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
+              <TableCell align="right">{row.calories}</TableCell>
               <TableCell align="right">{row.fat}</TableCell>
               <TableCell align="right">{row.carbs}</TableCell>
               <TableCell align="right">{row.protein}</TableCell>
@@ -138,8 +63,11 @@ function SimpleTable(props) {
         </TableBody>
       </Table>
     </Paper>
-    
   );
 }
-*/
 
+SimpleTable.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SimpleTable);
