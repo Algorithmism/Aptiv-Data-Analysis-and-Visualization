@@ -9,8 +9,6 @@ import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
-import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
-//import pgtabler from '../GoogleComp/pageTabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
   <div
@@ -22,17 +20,11 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
       { name == "App State Changes" &&
         <AccList />
       }
-      
       { name == "Timeline of Events" &&
         <Tabler />
       }
       
-      { name == "App Usage" &&
-        <Tabler />
       }
-      
-      
-      
       <div className="details">
         <Slug delay={600}>
           
@@ -57,12 +49,12 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
 )
 
 class SearchComp extends Component {
-  state = { data, columns: 2, margin: 50, filter: '', height: false }
+  state = { data, columns: 2, margin: 70, filter: '', height: true }
   search = e => this.setState({ filter: e.target.value })
   shuffle = () => this.setState(state => ({ data: lodash.shuffle(state.data) }))
   setColumns = e => this.setState({ columns: parseInt(e.key) })
   setMargin = e => this.setState({ margin: parseInt(e.key) })
-  //setHeight = e => this.setState({ height: e })
+  setHeight = e => this.setState({ height: e })
   render() {
     const data = this.state.data.filter(
       d => d.name.toLowerCase().indexOf(this.state.filter) != -1
@@ -75,7 +67,7 @@ class SearchComp extends Component {
           shuffle={this.shuffle}
           setColumns={this.setColumns}
           setMargin={this.setMargin}
-          //setHeight={this.setHeight}
+          setHeight={this.setHeight}
         />
         <Grid
           className="grid"

@@ -3,8 +3,6 @@ import SkeletonVList from './components/SkeletonVList.js';
 //import Collap from './components/CollapsibleComp/collapslist';
 //import AccList from './components/CollapsibleComp/dynamicdropdown';
 import SearchApp from './components/SearchComp/index.js';
-import ReactVirtualizedTable from './components/GoogleComp/virtualTabler';
-
 import './App.css';
 
 class App extends Component {
