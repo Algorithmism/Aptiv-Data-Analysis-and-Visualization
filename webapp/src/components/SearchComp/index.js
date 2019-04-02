@@ -9,6 +9,7 @@ import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
+import Charter from '../ChartComp/chrts';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 //import pgtabler from '../GoogleComp/pageTabler';
 
@@ -27,9 +28,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         <Tabler />
       }
       
-      { name == "App Usage" &&
-        <Tabler />
-      }
+   
       
       
       
@@ -44,6 +43,9 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         </Slug>
       </div>
     </Fade>
+    { name == "App Usage" &&
+        <Charter />
+      }
     <Fade
       show={!maximized}
       from={{ opacity: 0, transform: 'translate3d(0,140px,0)' }}
