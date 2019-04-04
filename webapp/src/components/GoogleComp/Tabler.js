@@ -26,6 +26,7 @@ class EventList extends React.Component{
       this.setState({events: response.data})
     });
   }
+
   render() {
     //const { classes } = this.props;
     console.log(this.state.events);
@@ -56,10 +57,13 @@ class EventList extends React.Component{
           </TableBody>
         </Table>
       </Paper>
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> mehdi
     )
   }
 }
@@ -67,7 +71,7 @@ class EventList extends React.Component{
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    //marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
@@ -80,6 +84,7 @@ function createData(name, calories, fat, carbs, protein) {
   id += 1;
   return { id, name, calories, fat, carbs, protein };
 }
+<<<<<<< HEAD
 /*
 const rows = VehicleList;
 console.log(rows);
@@ -93,6 +98,10 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 */
+=======
+
+
+>>>>>>> mehdi
 function SimpleTable(props) {
 
 
@@ -136,3 +145,31 @@ SimpleTable.propTypes = {
 
 
 export default withStyles(styles)(SimpleTable);
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+/*
+const rows = VehicleList;
+console.log(rows);
+*/
+/*
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
+*/
+
+
+>>>>>>> mehdi
