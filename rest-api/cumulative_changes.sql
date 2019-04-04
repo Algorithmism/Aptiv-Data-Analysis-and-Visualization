@@ -63,11 +63,16 @@ select vehicle_id,
 	from temp1
 	where event_name = 'RESUMED'
 		and lead_event = 'STOPPED'
--- 		and application_id = '08ba1e83-a429-4516-af8d-51c27ef4dd3e'
 	group by  
 				rollup(vehicle_id, application_id, date_trunc('year', timestamp ), date_trunc('month', timestamp ), date_trunc('week', timestamp ), date_trunc('day', timestamp ))
 	order by year, month, week, day, vehicle_id, application_id;
 -- 	where date_trunc('day', timestamp) >= date_trunc(coalesce((select max(day) from usage_over_time), '1900-01-01'))
 	
-select * from usage_over_time;
+select v.name as vehicle_name, a.name as application_name, total_time, uses, max_time, min_time, std_dev, variance, day, week, month, year from usage_over_time
+	join applications a on a.id = application_id
+	join vehicles v on v.id = vehicle_id
+	;
+	
+	
+	
 		
