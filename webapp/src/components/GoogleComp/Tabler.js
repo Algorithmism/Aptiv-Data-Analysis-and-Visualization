@@ -26,6 +26,7 @@ class EventList extends React.Component{
       this.setState({events: response.data})
     });
   }
+  
   render() {
     //const { classes } = this.props;
     console.log(this.state.events);
