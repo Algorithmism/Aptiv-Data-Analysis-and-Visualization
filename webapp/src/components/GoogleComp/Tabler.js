@@ -104,7 +104,6 @@ const rows = [
 >>>>>>> mehdi
 function SimpleTable(props) {
 
-
   return (
     <EventList/>
     /*
