@@ -8,6 +8,7 @@ const { Active_Screens } = require('./models/active_screens');
 const { Button_Presses } = require('./models/button_presses');
 const { App_State_Changes } = require('./models/app_state_changes');
 const { Summary_Timeline } = require('./models/summary_timeline');
+const { App_Usages } = require('./models/app_usages');
 
 //server settings
 const server = Hapi.server({
@@ -23,6 +24,18 @@ const server = Hapi.server({
     }
   }
 });
+
+//helper function for sorting json object array
+function predicateBy(prop){
+   return function(a,b){
+      if( a[prop] > b[prop]){
+          return 1;
+      }else if( a[prop] < b[prop] ){
+          return -1;
+      }
+      return 0;
+   }
+}
 
 //gets all vehicles
 server.route({
@@ -40,6 +53,7 @@ server.route({
     description: 'Gets all the vehicles from the database'
   }
 });
+
 
 //gets a vehicle via an ID
 server.route({
@@ -117,7 +131,6 @@ server.route({
   }
 });
 
-
 //gets an active_screen via an ID
 server.route({
   method: 'GET',
@@ -137,6 +150,26 @@ server.route({
     description: 'Gets an active_screen from the database by vehicle ID'
   }
 });
+
+
+//get request for app_state_changes Table
+server.route({
+  method: 'GET',
+  path: '/app_state_changes',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await App_State_Changes
+      .query()
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the app_state_changes from the database'
+  }
+});
+
 
 //get request for button_presses Table
 server.route({
@@ -193,21 +226,6 @@ server.route({
     description: 'Gets all the data from the summary_timeline database'
   }
 });
-
-
-
-
-//helper function for sorting json object array
-function predicateBy(prop){
-   return function(a,b){
-      if( a[prop] > b[prop]){
-          return 1;
-      }else if( a[prop] < b[prop] ){
-          return -1;
-      }
-      return 0;
-   }
-}
 
 //begining of data massaging
 server.route({
@@ -290,9 +308,7 @@ server.route({
 
 });
 
-
 //clear summary timeline for // DEBUG:
-//get request for summary_timeline table
 server.route({
   method: 'GET',
   path: '/clear_summary_timeline',
@@ -312,6 +328,91 @@ server.route({
 });
 
 
+//gets app_usages
+server.route({
+  method: 'GET',
+  path: '/app_usages',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const dropTable = await Vehicles.raw(`drop table if exists temp1;`);
+
+    const createTempTable = await Vehicles.raw(`
+      create temp table temp1(application_id uuid,
+         vehicle_id uuid,
+         event_name varchar(45),
+         timstamp timestamp,
+         lead_timestamp timestamp,
+         lead_event varchar(45),
+         duration interval,
+         curation_seconds int);
+      `);
+
+    const response = await Vehicles
+      .raw(`
+       insert into temp1
+       select application_id,
+		vehicle_id,
+		event_name,
+		timestamp,
+		lead(timestamp) over (partition by application_id, vehicle_id order by timestamp),
+		lead(event_name) over (partition by application_id, vehicle_id order by timestamp) as lead_event,
+		age(lead(timestamp) over (partition by application_id, vehicle_id order by timestamp), timestamp),
+		EXTRACT(SECOND FROM age(lead(timestamp) over (partition by application_id, vehicle_id order by timestamp), timestamp))
+	from app_state_changes
+		where event_name in ('RESUMED','STOPPED')
+		order by application_id, timestamp desc;
+
+
+drop table if exists temp2;
+
+create temp table temp2(application_id uuid,
+					   vehicle_id uuid,
+					   event_name varchar(45),
+					   timstamp timestamp,
+					   lead_timestamp timestamp,
+					   lead_event varchar(45),
+					   duration interval,
+					   duration_second int);
+
+             insert into temp2
+             select * from temp1
+            where event_name = 'RESUMED'
+              and lead_event = 'STOPPED';
+`);
+
+const insert = await Vehicles
+  .raw(`
+  select vehicle_id,
+  		application_id,
+  		sum(duration) as tot_time,
+  		count(*) as uses,
+  		max(duration) as max_time,
+  		min(duration) as min_time,
+      avg(duration) as average,
+  		stddev_samp(duration_second)
+  	from temp2
+  		group by vehicle_id, application_id;`);
+
+    //console.log(insert.rows);
+
+    return insert.rows;
+  },
+  options: {
+    description: 'Gets all the vehicles from the database'
+  }
+});
+
+
+
+
+
+
+
+
+
+//////////EXAMPLE API CALLS/////////
+
 //hello world get request
 server.route({
   method: 'GET',
@@ -329,7 +430,10 @@ server.route({
     return 'Hello, ' + encodeURIComponent(request.params.name) + '!';
   }
 });
+////////////////////////////////////
 
+
+/////////NOT API CALLS/////////////
 const init = async () => {
   // init database & ORM
   const knexRunTime = Knex(dbConfig['development']);
@@ -352,6 +456,6 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
-
+///////////////////////////////////
 
 //order by for sorting by timestamp

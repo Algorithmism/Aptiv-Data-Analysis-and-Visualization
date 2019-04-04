@@ -10,48 +10,45 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 
 
-class EventList extends React.Component{
+class VehicleList extends React.Component{
 
-  EventList(props){
-    this.props = props
-  }
 
   state = {
-    events: [],
+    vehicles: [],
   };
 
   componentDidMount() {
-    axios.get('http://localhost:8081/summary_timeline').then(response => {
+    axios.get('http://localhost:8081/vehicles').then(response => {
       console.log(response);
-      this.setState({events: response.data})
+      this.setState({vehicles: response.data})
     });
   }
-  render() {
-    //const { classes } = this.props;
-    console.log(this.state.events);
+  render(props) {
+    const { classes } = this.props;
+    console.log(this.state.vehicles);
     //return this.state.vehicles;
     return (
-      <Paper >
-        <Table >
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>Event Name</TableCell>
-              <TableCell align="right">Event</TableCell>
-              <TableCell align="right">Timestamp</TableCell>
-              <TableCell align="right">Vehicle ID</TableCell>
-              <TableCell align="right">Application ID</TableCell>
+            <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Description</TableCell>
+              <TableCell align="right">Created At</TableCell>
+              <TableCell align="right">Updated At</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-          {this.state.events.map(event =>
-            <TableRow key = {event.id}>
+          {this.state.vehicles.map(vehicle =>
+            <TableRow key = {vehicle.id}>
             <TableCell component="th" scope="row">
-              {event.event_name}
+              {vehicle.id}
             </TableCell>
-            <TableCell align="right">{event.event}</TableCell>
-            <TableCell align="right">{event.timestamp}</TableCell>
-            <TableCell align="right">{event.vehicle_id}</TableCell>
-            <TableCell align="right">{event.application_id}</TableCell>
+            <TableCell align="right">{vehicle.name}</TableCell>
+            <TableCell align="right">{vehicle.description}</TableCell>
+            <TableCell align="right">{vehicle.created_at}</TableCell>
+            <TableCell align="right">{vehicle.updated_at}</TableCell>
             </TableRow>)}
           </TableBody>
         </Table>
@@ -93,11 +90,11 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 */
-function SimpleTable(props) {
+function SimpleTable() {
 
 
   return (
-    <EventList/>
+    <VehicleList/>
     /*
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -129,10 +126,10 @@ function SimpleTable(props) {
   );
 }
 
-SimpleTable.propTypes = {
+VehicleList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(VehicleList);
