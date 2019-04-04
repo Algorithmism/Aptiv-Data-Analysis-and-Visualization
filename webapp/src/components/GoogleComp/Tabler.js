@@ -26,7 +26,7 @@ class EventList extends React.Component{
       this.setState({events: response.data})
     });
   }
-  
+
   render() {
     //const { classes } = this.props;
     console.log(this.state.events);
@@ -80,7 +80,6 @@ function createData(name, calories, fat, carbs, protein) {
 
 
 function SimpleTable(props) {
-
 
   return (
     <EventList/>
