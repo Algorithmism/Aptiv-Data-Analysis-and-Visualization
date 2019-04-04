@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react';
 import Chart from 'react-apexcharts'
 import './charter.css'
 import axios from 'axios';
@@ -10,40 +10,32 @@ var eventer;
 
 
 
-class Charter extends Component {
-
-
-    /*
-  eventer.map(event => {
-      uses.push(event.uses);
-      idd.push(event.vehicle_name +  " -- " + event.application_name);
-  });
-    */
-
+class Charter extends React.Component {
 
 
   state = {
-    events: []
-  }
+    events: [],
+  };
 
-
+  
   componentDidMount() {
     axios.get('http://localhost:8081/app_usages').then(response => {
-      //console.log(response);
+      console.log(response);
       const events = response.data;
-      this.setState({events})
-    })
-    this.state.events.map(event => {
-      uses.push(event.uses);
-      idd.push(event.vehicle_name +  " -- " + event.application_name);
+      this.setState({events: response.data})
   })
-
-  }
-
-
+    
+    //this.state.events.map(event => {
+      //uses.push(event.uses);
+      //idd.push(event.vehicle_name +  " -- " + event.application_name);
+    //})
     
 
-    constructor(props) {
+  } 
+  constructor(props) {
+
+
+  
       super(props);
 
       

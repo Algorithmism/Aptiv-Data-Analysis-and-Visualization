@@ -25,6 +25,11 @@ class EventList extends React.Component{
       console.log(response);
       this.setState({events: response.data})
     });
+
+    this.state.events.map(event => {
+      //uses.push(event.uses);
+      //idd.push(event.vehicle_name +  " -- " + event.application_name);
+    })
   }
 
   render() {
