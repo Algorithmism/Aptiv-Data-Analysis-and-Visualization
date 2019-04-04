@@ -1,23 +1,67 @@
 import React, { Component } from 'react'
 import Chart from 'react-apexcharts'
 import './charter.css'
+import axios from 'axios';
+
+var idd = [];
+var uses = [];
+var eventer;
+
+
+
+
 class Charter extends Component {
+
+
+    /*
+  eventer.map(event => {
+      uses.push(event.uses);
+      idd.push(event.vehicle_name +  " -- " + event.application_name);
+  });
+    */
+
+
+
+  state = {
+    events: []
+  }
+
+
+  componentDidMount() {
+    axios.get('http://localhost:8081/app_usages').then(response => {
+      //console.log(response);
+      const events = response.data;
+      this.setState({events})
+    })
+    this.state.events.map(event => {
+      uses.push(event.uses);
+      idd.push(event.vehicle_name +  " -- " + event.application_name);
+  })
+
+  }
+
+
+    
+
     constructor(props) {
       super(props);
-  
+
+      
       this.state = {
         options: {
           chart: {
             id: 'apexchart-example'
           },
           xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+            categories: idd
           }
         },
         series: [{
           name: 'series-1',
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }]
+          data: uses
+        }],
+
+
       }
     }
     render() {
