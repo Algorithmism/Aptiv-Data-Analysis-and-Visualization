@@ -9,13 +9,10 @@ import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
-<<<<<<< HEAD
 import All_Vehicles from '../GoogleComp/All_Vehicles';
-=======
 import Charter from '../ChartComp/chrts';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 //import pgtabler from '../GoogleComp/pageTabler';
->>>>>>> mehdi
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
   <div
