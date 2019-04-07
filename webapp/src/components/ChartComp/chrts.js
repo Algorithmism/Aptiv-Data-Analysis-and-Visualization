@@ -32,17 +32,17 @@ class Charter extends React.Component {
   async componentDidMount() {
     const response = await axios.get('http://localhost:8081/app_usages');
     const events = response.data;
-    this.setState({events: response.data},
+    this.setState({events: response.data});
     this.state.events.map(event => {
       uses.push(event.uses);
       idd.push(event.vehicle_name +  " -- " + event.application_name);
-    }));
+    });
   } 
   
     render() {
       return (
         <div className="bill">
-            <Chart options={this.state.options} series={this.state.series} type="bar" width={1000} height={320} />
+            <Chart options={this.state.options} series={this.state.series} type="bar" width={1200} height={300} />
         </div>
       );
     }
