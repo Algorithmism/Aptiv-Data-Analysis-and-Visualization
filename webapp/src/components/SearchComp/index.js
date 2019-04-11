@@ -11,7 +11,6 @@ import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
 import All_Vehicles from '../GoogleComp/All_Vehicles';
 import Charter from '../ChartComp/chrts';
-import Charter from '../ChartComp/candlesticks';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 import Candler from '../ChartComp/candlestick';
 //import pgtabler from '../GoogleComp/pageTabler';
