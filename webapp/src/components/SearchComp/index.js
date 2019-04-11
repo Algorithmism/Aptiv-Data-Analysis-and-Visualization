@@ -13,6 +13,7 @@ import All_Vehicles from '../GoogleComp/All_Vehicles';
 import Charter from '../ChartComp/chrts';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 import Candler from '../ChartComp/candlestick';
+import Biller from '../ChartComp/highchart';
 //import pgtabler from '../GoogleComp/pageTabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
@@ -22,9 +23,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     onClick={!maximized ? toggle : undefined}>
 
     <Fade show={maximized} delay={maximized ? 400 : 0}>
-      { name == "App State Changes" &&
-        <AccList />
-      }
+ 
       
       { name == "Timeline of Events" &&
         <Tabler />
@@ -44,6 +43,9 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         </Slug>
       </div>
     </Fade>
+    { name == "App State Changes" &&
+        <Biller />
+    }
     { name == "App Usage" &&
         <Charter />
     }

@@ -8,6 +8,8 @@
     "apexcharts": "^3.6.5",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
+    "highcharts": "^7.1.1",
+    "highcharts-react-official": "^2.1.3",
     "lodash": "^4.17.11",
     "lorem-ipsum": "^1.0.6",
     "mauerwerk": "^2.0.2",
