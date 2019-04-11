@@ -373,6 +373,7 @@ server.route({
                         uses bigint,
                         max_time interval,
                         min_time interval,
+                        avg_time interval,
                         std_dev interval,
                         variance bigint,
                         day timestamp,
@@ -393,6 +394,7 @@ server.route({
          count(*) as uses,
          max(duration) as max_time,
          min(duration) as min_time,
+         avg(duration) as avg_time,
          stddev_samp(duration_seconds)* interval '1 sec' as std_dev,
          variance(duration_seconds) as variance,
          date_trunc('day', timestamp ) as day,
@@ -411,7 +413,7 @@ server.route({
 
 const insert = await Vehicles
   .raw(`
-    select v.name as vehicle_name, a.name as application_name, total_time, uses, max_time, min_time, std_dev, variance, day, week, month, year from usage_over_time
+    select v.name as vehicle_name, a.name as application_name, total_time, uses, max_time, min_time, avg_time, std_dev, variance, day, week, month, year from usage_over_time
       join applications a on a.id = application_id
       join vehicles v on v.id = vehicle_id;`);
 
