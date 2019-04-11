@@ -11,7 +11,9 @@ import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
 import All_Vehicles from '../GoogleComp/All_Vehicles';
 import Charter from '../ChartComp/chrts';
+import Charter from '../ChartComp/candlesticks';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
+import Candler from '../ChartComp/candlestick';
 //import pgtabler from '../GoogleComp/pageTabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
@@ -29,9 +31,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         <Tabler />
       }
 
-      { name.toLowerCase() == "all active cars in system" &&
-        <All_Vehicles />
-      }
+
 
 
       <div className="details">
@@ -47,6 +47,9 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     </Fade>
     { name == "App Usage" &&
         <Charter />
+    }
+    { name.toLowerCase() == "all active cars in system" &&
+        <Candler />
     }
     <Fade
     
