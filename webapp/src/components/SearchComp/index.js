@@ -16,6 +16,7 @@ import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 import Candler from '../ChartComp/candlestick';
 import BarAverage from '../ChartComp/highchart';
 import RangeBar from '../ChartComp/rangebar';
+import PieCharter from '../ChartComp/piechart';
 //import pgtabler from '../GoogleComp/pageTabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
@@ -53,6 +54,10 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     }
     { name == "App Usage" &&
         <Charter />
+    }
+    { name == "Individual Vehcile App Usage" &&
+        <PieCharter />
+        
     }
     { name.toLowerCase() == "all active cars in system" &&
         <Candler />
