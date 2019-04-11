@@ -9,11 +9,13 @@ import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
+import TableUsage from '../GoogleComp/table_app_usage';
 import All_Vehicles from '../GoogleComp/All_Vehicles';
 import Charter from '../ChartComp/chrts';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 import Candler from '../ChartComp/candlestick';
-import Biller from '../ChartComp/highchart';
+import BarAverage from '../ChartComp/highchart';
+import RangeBar from '../ChartComp/rangebar';
 //import pgtabler from '../GoogleComp/pageTabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
@@ -43,8 +45,11 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         </Slug>
       </div>
     </Fade>
+    { name == "Combined App Usage Across Cars" &&
+        <TableUsage />
+    }
     { name == "App State Changes" &&
-        <Biller />
+        <BarAverage />
     }
     { name == "App Usage" &&
         <Charter />

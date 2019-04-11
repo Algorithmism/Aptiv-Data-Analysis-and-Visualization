@@ -4,12 +4,15 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import axios from 'axios';
 
-
-class Bill extends React.Component {
+var maxer = [];
+var miner = [];
+var names = [];
+class BarAverage extends React.Component {
 
     constructor(props) { 
         super(props);
-     
+
+
         this.state = {
             options: {
                 chart: {
@@ -24,35 +27,23 @@ class Bill extends React.Component {
                     text: 'Source: Heinz  2003'
                 },
                 xAxis: {
-                    categories: ['f1', 'f2', 'f3']
+                    categories: []
                 },
                 series: [ {
                     name: 'max',
                     stacking: true,
                     color: 'red',
-                    data: [
-                        [100],
-                        [120],
-                        [50]
-                    ]
+                    data: []
                 }, {
                     name: 'min',
                     stacking: true,
                     color: 'blue',
-                    data: [
-                        [13],
-                        [50],
-                        [1]
-                    ]
+                    data: []
                 }, {
                     type: 'scatter',
                     name: 'avg',
                     color: 'black',
-                    data: [
-                        [44],
-                        [55],
-                        [12]
-                    ]
+                    data: [0,0,0,0,0,0]
                 }]
             }
         }
@@ -62,9 +53,29 @@ class Bill extends React.Component {
         const events = response.data;
         this.setState({events: response.data});
         this.state.events.map(event => {
-          //uses.push(event.uses);
-          //idd.push(event.vehicle_name +  " -- " + event.application_name);
+          maxer.push(event.max_time);
+          miner.push(event.min_time);
+          names.push([event.application_name]);
         });
+    
+        
+
+        for (var i = 0; i < maxer.length; i++) {
+            
+            if(maxer[i].hasOwnProperty("minutes"))
+            {  
+                maxer[i] = (maxer[i].minutes)*(60)+maxer[i].seconds;
+            } else {
+                maxer[i] = maxer[i].seconds;
+            }
+
+            if(miner[i].hasOwnProperty("minutes"))
+            {  
+                miner[i] = [(miner[i].minutes)*(60)+miner[i].seconds];
+            } else {
+                miner[i] = [miner[i].seconds];
+            }
+        }
       } 
 
     render() {
@@ -77,4 +88,4 @@ class Bill extends React.Component {
 }
 
 
-export default Bill;
+export default BarAverage;

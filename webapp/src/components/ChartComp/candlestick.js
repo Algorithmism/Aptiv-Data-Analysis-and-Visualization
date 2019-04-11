@@ -26,7 +26,7 @@ class Candler extends React.Component {
         series: [{
           data: [{
             x: new Date(1538778600000),
-            y: [6629.81, 6650.5, 6623.04, 6633.33]
+            y: [6629, 6650.5, 6623.04, 6629]
           },
           {
             x: new Date(1538780400000),
@@ -34,7 +34,7 @@ class Candler extends React.Component {
           },
           {
             x: new Date(1538782200000),
-            y: [6630.71, 6648.95, 6623.34, 6635.65]
+            y: [6630.71, 6648.95, 6648.34, 6635.65]
           },
           {
             x: new Date(1538784000000),

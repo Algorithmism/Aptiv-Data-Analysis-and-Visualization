@@ -7,12 +7,12 @@ var idd = [];
 var uses = [];
 var eventer;
 
-class Charter extends React.Component {
+class RangeBar extends React.Component {
 
  constructor(props) { 
       super(props);
 
-      //console.log(typeof idd, idd[0]);
+      console.log(typeof idd, idd[0]);
       
       this.state = {
         options: {
@@ -51,4 +51,4 @@ class Charter extends React.Component {
     }
   }
 
-export default Charter;
+export default RangeBar;

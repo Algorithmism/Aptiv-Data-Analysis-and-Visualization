@@ -22,7 +22,7 @@ class EventList extends React.Component{
 
   componentDidMount() {
     axios.get('http://localhost:8081/summary_timeline').then(response => {
-      console.log(response);
+      //console.log(response);
       this.setState({events: response.data})
     });
 
@@ -34,7 +34,7 @@ class EventList extends React.Component{
 
   render() {
     //const { classes } = this.props;
-    console.log(this.state.events);
+    //console.log(this.state.events);
     //return this.state.vehicles;
     return (
       <Paper >

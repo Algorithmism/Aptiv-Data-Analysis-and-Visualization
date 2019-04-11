@@ -28,7 +28,7 @@ export default [
       name: 'Combined App Usage Across Cars',
       description: '#fdfbfb → #ebedee',
       css: 'linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%)',
-      height: 400
+      height: 1600
     },
     {
       name: 'Individual Vehcile App Usage',
