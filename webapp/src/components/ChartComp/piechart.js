@@ -29,6 +29,8 @@ class PieCharter extends React.Component {
           },
           series: [44, 55, 13, 43, 22],
         }
+
+        
       }
 
       render() {

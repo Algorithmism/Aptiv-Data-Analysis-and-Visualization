@@ -77,7 +77,7 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
 
 class SearchComp extends Component {
 
-  state = { data, columns: 2, margin: 50, filter: '', height: true }
+  state = { data, columns: 2, margin: 50, filter: '', height: false }
   search = e => this.setState({ filter: e.target.value })
   shuffle = () => this.setState(state => ({ data: lodash.shuffle(state.data) }))
   setColumns = e => this.setState({ columns: parseInt(e.key) })

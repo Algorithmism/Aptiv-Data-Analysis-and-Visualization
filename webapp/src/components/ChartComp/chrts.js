@@ -45,7 +45,7 @@ class Charter extends React.Component {
     render() {
       return (
         <div className="bill">
-            <Chart options={this.state.options} series={this.state.series} type="bar" width={1200} height={300} />
+            <Chart options={this.state.options} series={this.state.series} type="bar" width={1200} height={600} />
         </div>
       );
     }

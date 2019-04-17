@@ -1,93 +1,96 @@
 import React from 'react'
-import { render } from 'react-dom'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import axios from 'axios';
 
-var maxer = [];
-var miner = [];
-var names = [];
 class BarAverage extends React.Component {
 
-    constructor(props) { 
+    constructor(props) {
         super(props);
 
-
         this.state = {
-            events: [],
             options: {
                 chart: {
-                    renderTo: 'container',
-                    type: 'bar',
-                    width: "1000"
+                    width: "1000",
+                    height: "700"
                 },
                 title: {
-                    text: 'Height Versus Weight of 507 Individuals by Gender'
-                },
-                subtitle: {
-                    text: 'Source: Heinz  2003'
+                    text: 'App Usages'
                 },
                 xAxis: {
                     categories: []
                 },
-                series: [ {
+                series: [{
+                    type: 'bar',
                     name: 'max',
                     stacking: true,
                     color: 'red',
-                    data: []
+                    data: [0, 1, 1, 5, 5]
                 }, {
+                    type: 'bar',
                     name: 'min',
                     stacking: true,
                     color: 'blue',
-                    data: []
+                    data: [0, 1, 2, 5, 5]
                 }, {
                     type: 'scatter',
                     name: 'avg',
                     color: 'black',
-                    data: [0,0,0,0,0,0]
+                    data: [0, 64, 46, 1, 5]
                 }]
             }
         }
     }
+
     async componentDidMount() {
         const response = await axios.get('http://localhost:8081/app_usages');
         const events = response.data;
-        this.setState({events: response.data});
-        this.state.events.map(event => {
-          maxer.push(event.max_time);
-          miner.push(event.min_time);
-          names.push([event.application_name]);
-        });
-    
-        
+        const maxer = [];
+        const miner = [];
+        const names = [];
+        const avrs = [];
 
-        for (var i = 0; i < maxer.length; i++) {
-            
-            if(maxer[i].hasOwnProperty("minutes"))
-            {  
-                maxer[i] = (maxer[i].minutes)*(60)+maxer[i].seconds;
+        events.forEach(event => {
+            maxer.push(event.max_time);
+            miner.push(event.min_time);
+            names.push(event.application_name);
+            avrs.push(event.avg_time);
+        });
+
+        for (let i = 0; i < maxer.length; i++) {
+
+            if (maxer[i].hasOwnProperty("minutes")) {
+                maxer[i] = (maxer[i].minutes) * (60) + maxer[i].seconds;
             } else {
                 maxer[i] = maxer[i].seconds;
             }
 
-            if(miner[i].hasOwnProperty("minutes"))
-            {  
-                miner[i] = (miner[i].minutes)*(60)+miner[i].seconds;
+            if (miner[i].hasOwnProperty("minutes")) {
+                miner[i] = (miner[i].minutes) * (60) + miner[i].seconds;
             } else {
                 miner[i] = miner[i].seconds;
             }
+
+            if (avrs[i].hasOwnProperty("milliseconds")) {
+                avrs[i] = (avrs[i].milliseconds)/1000 + avrs[i].seconds;
+            } else {
+                avrs[i] = avrs[i].seconds;
+            }
         }
-        this.state.options.series[0].data = maxer;
-        this.state.options.series[1].data = miner;
-        this.state.options.series[2].data = miner;
-        
-      } 
+        const options = this.state.options;
+        options.series[0].data = maxer;
+        options.series[1].data = miner;
+        options.series[2].data = avrs;
+        options.xAxis.categories = names;
+        this.setState({ options });
+    }
 
     render() {
-        
+        // const cb = function () { console.log('I was called') };
+
         return (
             <div id="biller">
-                <HighchartsReact highcharts={Highcharts} options={this.state.options}  />
+                <HighchartsReact highcharts={Highcharts} options={{ ...this.state.options }} />
             </div>
         );
     }
