@@ -160,7 +160,7 @@ server.route({
     //NOTE: Debug is optional - prints SQL command and results into stdout
 
     const response = await App_State_Changes
-      .query()
+      .query().eager('application')
       .debug();
 
     return response;
@@ -217,7 +217,7 @@ server.route({
     //NOTE: Debug is optional - prints SQL command and results into stdout
 
     const response = await Summary_Timeline
-      .query()
+      .query().eager('application').eager('vehicle')
       .debug();
 
     return response;
