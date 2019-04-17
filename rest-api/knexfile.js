@@ -7,7 +7,7 @@ module.exports = {
     connection: {
       database: 'localhost',
       user: 'postgres',
-      password: 'pass'
+      password: 'ilike2k6'
     },
     pool: {
       min: 2,
@@ -22,7 +22,7 @@ module.exports = {
     connection: {
       database: 'andromeda',
       user: 'postgres',
-      password: 'pass'
+      password: 'password'
     },
     pool: {
       min: 2,

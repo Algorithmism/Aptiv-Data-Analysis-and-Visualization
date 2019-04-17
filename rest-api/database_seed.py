@@ -1,3 +1,11 @@
+########################################################################################################################
+#
+# ECE 480 Senior Design
+# This script generates random test input data to the system
+#
+########################################################################################################################
+
+
 import random
 import psycopg2
 from faker import Faker
@@ -6,9 +14,13 @@ from datetime import datetime
 from datetime import timedelta
 
 
+
+#
+# Inserts vehicle into table
+#
 def create_vehicle(conn, name):
 	# create a cursor
-	cur = conn.cursor()
+	cur = conn.cursor() #psql lib connection object
 
 	sql = """INSERT INTO vehicles(name)
 	             VALUEs (%s) returning id"""
@@ -23,9 +35,11 @@ def create_vehicle(conn, name):
 	return vehicle_id
 
 
-
+#
+# gets the vehicle name
+#
 def get_vehicle(conn, name):
-	cur = conn.cursor()
+	cur = conn.cursor() #connection to database
 	sql = """select * from vehicles
              where name = (%s);"""
 
@@ -36,6 +50,9 @@ def get_vehicle(conn, name):
 	cur.close()
 
 	return vehicle
+
+
+
 
 def get_vehicles(conn):
 	cur = conn.cursor()
@@ -94,7 +111,7 @@ def create_active_screens(conn, vehicle_id, application_id, screen_name, time_st
 	cur.execute(sql,(application_id, screen_name, vehicle_id, time_stamp,))	
 	
 
-	conn.commit()
+	conn.commit() #commit only works when you update
 
 
 
@@ -202,7 +219,7 @@ def start_clean(conn, vehicle_count, application_count, application_screen_count
 def generate_new_day(conn, entry_count):
 
 	# Get the last date that data was generated for
-	start_time = 
+	# start_time =
 
 
 	vehciles = get_vehicles(conn)
@@ -215,6 +232,22 @@ def generate_new_day(conn, entry_count):
 
 
 
+
+# cur.execute("SELECT * FROM active_screens")
+# print("The number of parts: ", cur.rowcount)
+# row = cur.fetchone()
+# print(row)
+
+
+
+# Clears everything and starts with brand new data for a single day, or a set of days if you want it ot generate multiple days
+# start_clean(conn, vehicle_count, application_count, application_screen_count, entry_count, start_time, end_time):
+
+
+# Generates new data for all of the vehciles in the database for the next day
+# generate_new_day(conn):
+
+########################################################################################################################
 
 # number of vehicles
 vehicle_count = 1000
@@ -236,11 +269,7 @@ start_time = datetime.strptime('Jun 1 2005  12:01AM', '%b %d %Y %I:%M%p')
 
 end_time  = datetime.strptime('Jun 1 2005  11:59PM', '%b %d %Y %I:%M%p')
 
-
-
-
-
-
+########################################################################################################################
 
 # Creates a days worth of data for a set of vehicles
 conn = psycopg2.connect(host="localhost",database="aptiv_test_1", user="postgres", password="password")
@@ -254,19 +283,3 @@ cur.execute('SELECT version()')
 # display the PostgreSQL database server version
 db_version = cur.fetchone()
 print(db_version)
-
-# cur.execute("SELECT * FROM active_screens")
-# print("The number of parts: ", cur.rowcount)
-# row = cur.fetchone()
-# print(row)
-
-
-
-# Clears everything and starts with brand new data for a single day, or a set of days if you want it ot generate multiple days
-# start_clean(conn, vehicle_count, application_count, application_screen_count, entry_count, start_time, end_time):
-
-
-# Generates new data for all of the vehciles in the database for the next day
-generate_new_day(conn):
-
-
