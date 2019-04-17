@@ -4,7 +4,7 @@ export default [
       name: 'App State Changes',
       description: '#a8edea → #fed6e3',
       css: 'linear-gradient(to top, #a8edea 0%, #fed6e3 100%)',
-      height: 200
+      height: 400
     },
     {
       name: 'Timeline of Events',
@@ -28,7 +28,7 @@ export default [
       name: 'Combined App Usage Across Cars',
       description: '#fdfbfb → #ebedee',
       css: 'linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%)',
-      height: 400
+      height: 1600
     },
     {
       name: 'Individual Vehcile App Usage',

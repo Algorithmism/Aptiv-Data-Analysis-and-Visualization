@@ -22,13 +22,19 @@ class EventList extends React.Component{
 
   componentDidMount() {
     axios.get('http://localhost:8081/summary_timeline').then(response => {
-      console.log(response);
+      //console.log(response);
       this.setState({events: response.data})
     });
+
+    this.state.events.map(event => {
+      //uses.push(event.uses);
+      //idd.push(event.vehicle_name +  " -- " + event.application_name);
+    })
   }
+
   render() {
     //const { classes } = this.props;
-    console.log(this.state.events);
+    //console.log(this.state.events);
     //return this.state.vehicles;
     return (
       <Paper >
@@ -58,8 +64,6 @@ class EventList extends React.Component{
       </Paper>
 
 
-
-
     )
   }
 }
@@ -67,7 +71,7 @@ class EventList extends React.Component{
 const styles = theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    //marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
@@ -94,7 +98,6 @@ const rows = [
 ];
 */
 function SimpleTable(props) {
-
 
   return (
     <EventList/>

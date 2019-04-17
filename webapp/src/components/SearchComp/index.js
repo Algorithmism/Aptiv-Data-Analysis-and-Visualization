@@ -9,7 +9,15 @@ import Header from './Header'
 import { Grid, Slug, Fade } from 'mauerwerk'
 import AccList from '../CollapsibleComp/dynamicdropdown.js';
 import Tabler from '../GoogleComp/Tabler';
+import TableUsage from '../GoogleComp/table_app_usage';
 import All_Vehicles from '../GoogleComp/All_Vehicles';
+import Charter from '../ChartComp/chrts';
+import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
+import Candler from '../ChartComp/candlestick';
+import BarAverage from '../ChartComp/highchart';
+import RangeBar from '../ChartComp/rangebar';
+import PieCharter from '../ChartComp/piechart';
+//import pgtabler from '../GoogleComp/pageTabler';
 
 const Cell = ({ toggle, name, height, description, css, maximized }) => (
   <div
@@ -18,15 +26,14 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     onClick={!maximized ? toggle : undefined}>
 
     <Fade show={maximized} delay={maximized ? 400 : 0}>
-      { name == "App State Changes" &&
-        <AccList />
-      }
+ 
+      
       { name == "Timeline of Events" &&
         <Tabler />
       }
-      { name.toLowerCase() == "all active cars in system" &&
-        <All_Vehicles />
-      }
+
+
+
 
       <div className="details">
         <Slug delay={600}>
@@ -39,7 +46,24 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         </Slug>
       </div>
     </Fade>
+    { name == "Combined App Usage Across Cars" &&
+        <TableUsage />
+    }
+    { name == "App State Changes" &&
+        <BarAverage />
+    }
+    { name == "App Usage" &&
+        <Charter />
+    }
+    { name == "Individual Vehcile App Usage" &&
+        <PieCharter />
+        
+    }
+    { name.toLowerCase() == "all active cars in system" &&
+        <Candler />
+    }
     <Fade
+    
       show={!maximized}
       from={{ opacity: 0, transform: 'translate3d(0,140px,0)' }}
       enter={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
@@ -52,7 +76,8 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
 )
 
 class SearchComp extends Component {
-  state = { data, columns: 2, margin: 70, filter: '', height: true }
+
+  state = { data, columns: 2, margin: 50, filter: '', height: false }
   search = e => this.setState({ filter: e.target.value })
   shuffle = () => this.setState(state => ({ data: lodash.shuffle(state.data) }))
   setColumns = e => this.setState({ columns: parseInt(e.key) })
@@ -70,7 +95,7 @@ class SearchComp extends Component {
           shuffle={this.shuffle}
           setColumns={this.setColumns}
           setMargin={this.setMargin}
-          setHeight={this.setHeight}
+          //setHeight={this.setHeight}
         />
         <Grid
           className="grid"
