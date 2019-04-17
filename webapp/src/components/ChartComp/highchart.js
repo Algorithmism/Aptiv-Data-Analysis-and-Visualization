@@ -14,6 +14,7 @@ class BarAverage extends React.Component {
 
 
         this.state = {
+            events: [],
             options: {
                 chart: {
                     renderTo: 'container',
@@ -71,14 +72,19 @@ class BarAverage extends React.Component {
 
             if(miner[i].hasOwnProperty("minutes"))
             {  
-                miner[i] = [(miner[i].minutes)*(60)+miner[i].seconds];
+                miner[i] = (miner[i].minutes)*(60)+miner[i].seconds;
             } else {
-                miner[i] = [miner[i].seconds];
+                miner[i] = miner[i].seconds;
             }
         }
+        this.state.options.series[0].data = maxer;
+        this.state.options.series[1].data = miner;
+        this.state.options.series[2].data = miner;
+        
       } 
 
     render() {
+        
         return (
             <div id="biller">
                 <HighchartsReact highcharts={Highcharts} options={this.state.options}  />
