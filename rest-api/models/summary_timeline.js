@@ -8,19 +8,6 @@ class Summary_Timeline extends Model {
 
   static get relationMappings() {
     return {
-      application: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: `${__dirname}/applications`,
-        join: {
-          from: 'summary_timeline.application_id',
-          to: 'applications.id',
-        }
-      }
-    };
-  }
-
-  static get relationMappings() {
-    return {
       vehicle: {
         relation: Model.BelongsToOneRelation,
         modelClass: `${__dirname}/vehicles`,
@@ -29,8 +16,18 @@ class Summary_Timeline extends Model {
           to: 'vehicles.id',
         }
       }
-    };
-  }
+    ,
+      application: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: `${__dirname}/applications`,
+        join: {
+          from: 'summary_timeline.application_id',
+          to: 'applications.id',
+        }
+      }
+  };
+}
+
 
 
 }
