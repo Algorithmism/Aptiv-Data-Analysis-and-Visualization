@@ -17,9 +17,13 @@ import Candler from '../ChartComp/candlestick';
 import BarAverage from '../ChartComp/highchart';
 import RangeBar from '../ChartComp/rangebar';
 import PieCharter from '../ChartComp/piechart';
+
+import axios from 'axios';
 //import pgtabler from '../GoogleComp/pageTabler';
 
-const Cell = ({ toggle, name, height, description, css, maximized }) => (
+var namer = [];
+var counter = 0;
+const Cell = ({ toggle, name, height, description, css, maximized, holder }) => (
   <div
     className="cell"
     style={{ backgroundImage: css, cursor: !maximized ? 'pointer' : 'auto' }}
@@ -28,11 +32,6 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     <Fade show={maximized} delay={maximized ? 400 : 0}>
  
       
-      { name == "Timeline of Events" &&
-        <Tabler />
-      }
-
-
 
 
       <div className="details">
@@ -46,11 +45,14 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
         </Slug>
       </div>
     </Fade>
+    { name == "Timeline of Events" &&
+        <Tabler />
+      }
     { name == "Combined App Usage Across Cars" &&
         <TableUsage />
     }
     { name == "App State Changes" &&
-        <BarAverage />
+        <BarAverage postType={holder}/>
     }
     { name == "App Usage" &&
         <Charter />
@@ -74,9 +76,58 @@ const Cell = ({ toggle, name, height, description, css, maximized }) => (
     </Fade>
   </div>
 )
-
+//
 class SearchComp extends Component {
 
+
+  constructor() {
+    super();
+    
+    this.state = {
+      data, 
+      columns: 2, 
+      margin: 50, 
+      filter: '', 
+      height: false,
+      curvech: '',
+      showMenu: false
+    };
+    
+    this.showMenu = this.showMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+  }
+
+  async componentDidMount() {
+    const response = await axios.get('http://localhost:8081/vehicles');
+    const events = response.data;
+    this.setState({events: response.data});
+    this.state.events.map(event => {
+      namer.push(event.name);
+    });
+    
+  } 
+
+  showMenu(event) {
+    event.preventDefault();
+    
+    this.setState({ showMenu: true }, () => {
+      document.addEventListener('click', this.closeMenu);
+    });
+  }
+  
+  closeMenu() {
+    this.setState({ showMenu: false }, () => {
+      document.removeEventListener('click', this.closeMenu);
+    });
+  }
+
+  handleRegionClick(nmn) {
+    this.setState({curvech: nmn});
+    //window.location.reload();
+    
+  }
+
+  
   state = { data, columns: 2, margin: 50, filter: '', height: false }
   search = e => this.setState({ filter: e.target.value })
   shuffle = () => this.setState(state => ({ data: lodash.shuffle(state.data) }))
@@ -95,8 +146,29 @@ class SearchComp extends Component {
           shuffle={this.shuffle}
           setColumns={this.setColumns}
           setMargin={this.setMargin}
-          //setHeight={this.setHeight}
+          setHeight={this.setHeight}
+          
         />
+              <div className= "dropper">
+        <button onClick={this.showMenu}>
+          Vehicles
+        </button>
+        
+        {
+          this.state.showMenu
+            ? (
+              <div className="menu">
+              {this.state.events.map(event =>
+                <button key={event.name} onClick={() => this.handleRegionClick(event.name)}> {event.name} </button>
+              )}
+              <button> All Vehicles </button>
+              </div>
+            )
+            : (
+              null
+            )
+        }
+      </div>
         <Grid
           className="grid"
           // Arbitrary data, should contain keys, possibly heights, etc.
@@ -114,7 +186,7 @@ class SearchComp extends Component {
           // Delay when active elements (blown up) are minimized again
           closeDelay={400}>
           {(data, maximized, toggle) => (
-            <Cell {...data} maximized={maximized} toggle={toggle} />
+            <Cell {...data} maximized={maximized} toggle={toggle} holder={this.state.curvech} />
           )}
         </Grid>
       </div>

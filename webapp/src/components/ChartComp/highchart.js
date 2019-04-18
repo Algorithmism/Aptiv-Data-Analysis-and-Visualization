@@ -6,9 +6,11 @@ import axios from 'axios';
 class BarAverage extends React.Component {
 
     constructor(props) {
+        
         super(props);
 
         this.state = {
+            holder: '',
             options: {
                 chart: {
                     width: "1000",
@@ -43,7 +45,15 @@ class BarAverage extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await axios.get('http://localhost:8081/app_usages');
+        let urler = '';
+        if(this.props.postType != "" || this.props.postType ==  "allcars") {
+            urler = 'http://localhost:8081/app_usages'+ "/'"+ this.props.postType + "'";
+            this.setState({holder: this.props.postType})
+        } else {
+            urler = 'http://localhost:8081/app_usages';
+        }
+        console.log(urler);
+        const response = await axios.get(urler);
         const events = response.data;
         const maxer = [];
         const miner = [];
@@ -87,7 +97,10 @@ class BarAverage extends React.Component {
 
     render() {
         // const cb = function () { console.log('I was called') };
-
+        if(this.props.postType != this.state.holder) {
+            this.componentDidMount();
+            this.setState({holder: this.props.postType})
+        }
         return (
             <div id="biller">
                 <HighchartsReact highcharts={Highcharts} options={{ ...this.state.options }} />
