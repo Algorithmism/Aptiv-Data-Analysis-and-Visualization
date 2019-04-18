@@ -55,7 +55,7 @@ const Cell = ({ toggle, name, height, description, css, maximized, holder }) => 
         <BarAverage postType={holder}/>
     }
     { name == "App Usage" &&
-        <Charter />
+        <Charter postType={holder}/>
     }
     { name == "Individual Vehcile App Usage" &&
         <PieCharter />
@@ -161,7 +161,7 @@ class SearchComp extends Component {
               {this.state.events.map(event =>
                 <button key={event.name} onClick={() => this.handleRegionClick(event.name)}> {event.name} </button>
               )}
-              <button> All Vehicles </button>
+              <button key="allcars"> All Vehicles </button>
               </div>
             )
             : (

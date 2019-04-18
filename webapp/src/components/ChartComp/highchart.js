@@ -52,7 +52,6 @@ class BarAverage extends React.Component {
         } else {
             urler = 'http://localhost:8081/app_usages';
         }
-        console.log(urler);
         const response = await axios.get(urler);
         const events = response.data;
         const maxer = [];
