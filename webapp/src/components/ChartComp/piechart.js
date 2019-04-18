@@ -12,7 +12,7 @@ class PieCharter extends React.Component {
         this.state = {
           holder : '',
           options: {
-            labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+            labels: [],
             responsive: [{
               breakpoint: 480,
               options: {
@@ -25,7 +25,7 @@ class PieCharter extends React.Component {
               }
             }]
           },
-          series: [44, 55, 13, 43, 22],
+          series: [],
         }       
       }
 
@@ -46,7 +46,7 @@ class PieCharter extends React.Component {
           timer.push(event.total_time);
           namers.push(event.application_name);
         });
-
+        
         for (let i = 0; i < timer.length; i++) {
 
           if (timer[i].hasOwnProperty("minutes")) {
@@ -62,7 +62,8 @@ class PieCharter extends React.Component {
 
         timer.sort();
         console.log(timer);
-        this.setState({series : [timer[0], timer[10],timer[20],timer[30]] })
+        if(timer.length != 0) {
+        this.setState({series : [timer[0], timer[10],timer[20],timer[30]] });
         this.setState({ options: {
           labels: [namers[0],namers[10],namers[20],namers[30]],
           responsive: [{
@@ -76,7 +77,24 @@ class PieCharter extends React.Component {
               }
             }
           }]
-        }})
+        }});
+      } else {
+        this.setState({series : [0,0] });
+        this.setState({ options: {
+          labels: [0,0],
+          responsive: [{
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }]
+        }});
+      }
         
       }
 

@@ -149,10 +149,10 @@ class SearchComp extends Component {
           setHeight={this.setHeight}
           
         />
-              <div className= "dropper">
-        <button onClick={this.showMenu}>
-          Vehicles
-        </button>
+        <div className= "dropper">
+          <button onClick={this.showMenu}>
+            Vehicles
+          </button>
         
         {
           this.state.showMenu
