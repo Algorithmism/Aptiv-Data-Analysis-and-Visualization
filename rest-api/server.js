@@ -217,7 +217,7 @@ server.route({
     //NOTE: Debug is optional - prints SQL command and results into stdout
 
     const response = await Summary_Timeline
-      .query().eager('vehicle')
+      .query().eager('vehicle').eager('application')
       .debug();
 
     return response;
