@@ -56,7 +56,7 @@ class EventList extends React.Component{
             </TableCell>
             <TableCell align="right">{event.event}</TableCell>
             <TableCell align="right">{event.timestamp}</TableCell>
-            <TableCell align="right">{event.vehicle_id}</TableCell>
+            <TableCell align="right">{event.vehicle.name}</TableCell>
             <TableCell align="right">{event.application_id}</TableCell>
             </TableRow>)}
           </TableBody>
