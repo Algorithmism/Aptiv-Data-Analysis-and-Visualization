@@ -227,6 +227,25 @@ server.route({
   }
 });
 
+
+//get request for summary_timeline table with specific vehicle name
+server.route({
+  method: 'GET',
+  path: '/summary_timeline/{vehicle_name}',
+  handler: async (request, h) => {
+    //NOTE: Debug is optional - prints SQL command and results into stdout
+
+    const response = await Summary_Timeline
+      .query().eager('application').joinEager('vehicle').where('vehicle.name',request.params.vehicle_name)
+      .debug();
+
+    return response;
+  },
+  options: {
+    description: 'Gets all the data from the summary_timeline database'
+  }
+});
+
 //begining of data massaging
 server.route({
   method: 'GET',
