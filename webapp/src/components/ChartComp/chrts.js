@@ -41,7 +41,7 @@ class Charter extends React.Component {
     } else {
         urler = 'http://localhost:8081/app_usages';
     }
-    console.log(urler);
+    //console.log(urler);
     idd = [];
     uses = [];
     const response = await axios.get(urler);
@@ -60,6 +60,7 @@ class Charter extends React.Component {
         categories: idd
       }
     }});
+
     this.setState({series: [{
       name: 'series-1',
       data: uses
@@ -72,7 +73,7 @@ class Charter extends React.Component {
       if(this.props.postType != this.state.holder) {
         this.componentDidMount();
         this.setState({holder: this.props.postType})
-        console.log(this.state.options.xaxis.categories);
+        //console.log(this.state.options.xaxis.categories);
       }
 
       return (

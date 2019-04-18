@@ -46,10 +46,10 @@ const Cell = ({ toggle, name, height, description, css, maximized, holder }) => 
       </div>
     </Fade>
     { name == "Timeline of Events" &&
-        <Tabler />
+        <Tabler postType={holder}/>
       }
     { name == "Combined App Usage Across Cars" &&
-        <TableUsage />
+        <TableUsage postType={holder}/>
     }
     { name == "App State Changes" &&
         <BarAverage postType={holder}/>
@@ -58,11 +58,11 @@ const Cell = ({ toggle, name, height, description, css, maximized, holder }) => 
         <Charter postType={holder}/>
     }
     { name == "Individual Vehcile App Usage" &&
-        <PieCharter />
+        <PieCharter postType={holder}/>
         
     }
     { name.toLowerCase() == "all active cars in system" &&
-        <Candler />
+        <Candler postType={holder}/>
     }
     <Fade
     
