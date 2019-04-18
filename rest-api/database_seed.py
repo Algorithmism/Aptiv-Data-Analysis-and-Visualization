@@ -5,7 +5,7 @@
 #
 ########################################################################################################################
 
-
+#imports libraries
 import random
 import psycopg2
 from faker import Faker
@@ -53,7 +53,9 @@ def get_vehicle(conn, name):
 
 
 
-
+#
+# Gets the vehicle object
+#
 def get_vehicles(conn):
 	cur = conn.cursor()
 	sql = """select * from vehicles;"""
@@ -66,7 +68,9 @@ def get_vehicles(conn):
 
 	return vehicles
 
-
+#
+# Creates application(s) to be tracked
+#
 def create_application(conn, application_name, version):
 	# create a cursor
 	cur = conn.cursor()
@@ -82,7 +86,9 @@ def create_application(conn, application_name, version):
 
 	return applcation_id
 
-
+#
+# gets all applications running
+#
 def get_applications(conn):
 	cur = conn.cursor()
 	sql = """select * from applications;"""
@@ -96,11 +102,15 @@ def get_applications(conn):
 	return applications
 
 
-
+#
+# Ignition cycle
+#
 def create_ignition_cycle(conn):
 	pass
 
-
+#
+# Active screens for display
+#
 def create_active_screens(conn, vehicle_id, application_id, screen_name, time_stamp):
 	# create a cursor
 	cur = conn.cursor()
@@ -125,8 +135,9 @@ def get_last_entry(conn):
 	pass
 
 
-
-
+#
+# truncates all tables executes sql
+#
 def truncate_tables(conn):
 	cur = conn.cursor()
 
@@ -145,9 +156,9 @@ def truncate_tables(conn):
 
 	conn.commit()
 
-
-
-
+#
+# generates data for the day
+#
 def generate_day(conn, start_time, vehicles, applications, application_screens, entry_count):
 	vehicle_times = []
 	for i in range(len(vehicles)):
@@ -171,6 +182,9 @@ def generate_day(conn, start_time, vehicles, applications, application_screens, 
 		vehicle_times[vehicle_index] = vehicle_times[vehicle_index] + timedelta(seconds=time_delta)
 
 
+#
+# Cleans data
+#
 def start_clean(conn, vehicle_count, application_count, application_screen_count, entry_count, start_time, end_time):
 
 
@@ -213,9 +227,9 @@ def start_clean(conn, vehicle_count, application_count, application_screen_count
 
 	generate_day(conn, vehicles, applcations, application_screens, entry_count)
 
-
-
-
+#
+# generates new data for later date
+#
 def generate_new_day(conn, entry_count):
 
 	# Get the last date that data was generated for
@@ -266,7 +280,7 @@ entry_count = 15000
 # time to start the simulation
 start_time = datetime.strptime('Jun 1 2005  12:01AM', '%b %d %Y %I:%M%p')
 
-
+# time to end the simulation
 end_time  = datetime.strptime('Jun 1 2005  11:59PM', '%b %d %Y %I:%M%p')
 
 ########################################################################################################################
