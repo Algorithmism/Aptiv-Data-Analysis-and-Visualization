@@ -35,7 +35,7 @@ class Charter extends React.Component {
   async componentDidMount() {
 
     let urler = '';
-    if(this.props.postType != "" || this.props.postType ==  "allcars") {
+    if(this.props.postType != "" && this.props.postType !=  "allcars") {
         urler = 'http://localhost:8081/app_usages'+ "/'"+ this.props.postType + "'";
         this.setState({holder: this.props.postType})
     } else {
@@ -49,7 +49,7 @@ class Charter extends React.Component {
     this.setState({events: response.data});
     this.state.events.map(event => {
       uses.push(event.uses);
-      idd.push(event.vehicle_name +  " -- " + event.application_name);
+      idd.push(event.application_name);
     });
 
     this.setState({options: {

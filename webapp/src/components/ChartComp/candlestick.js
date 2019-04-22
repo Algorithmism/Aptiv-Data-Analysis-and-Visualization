@@ -109,15 +109,82 @@ class Candler extends React.Component {
     }
 
     
-    async componentDidMount() {
-        const response = await axios.get('http://localhost:8081/app_usages');
-        const events = response.data;
+ async componentDidMount() {
+        let urler = '';
+
+        let maxer = [];
+        let miner = [];
+        let names = [];
+        let avrs = [];
+        let stder = [];
+
+        if(this.props.postType != "" || this.props.postType ==  "allcars") {
+            urler = 'http://localhost:8081/app_usages'+ "/'"+ this.props.postType + "'";
+            this.setState({holder: this.props.postType})
+        } else {
+            urler = 'http://localhost:8081/app_usages';
+        }
+        const response = await axios.get(urler);
         this.setState({events: response.data});
+        //console.log(response);
         this.state.events.map(event => {
-          //uses.push(event.uses);
-          //idd.push(event.vehicle_name +  " -- " + event.application_name);
+            maxer.push(event.max_time);
+            miner.push(event.min_time);
+            names.push(event.application_name);
+            avrs.push(event.avg_time);
+            stder.push(event.std_dev);
         });
-    } 
+
+
+        for (let i = 0; i < maxer.length; i++) {
+
+          if (maxer[i].hasOwnProperty("minutes")) {
+            if (maxer[i].hasOwnProperty("seconds")) {
+              maxer[i] = (maxer[i].minutes) * (60) + maxer[i].seconds;
+            } else {
+              maxer[i] = (maxer[i].minutes) * (60)
+            }
+          } else {
+              maxer[i] = maxer[i].seconds;
+          }
+
+          if (miner[i].hasOwnProperty("minutes")) {
+            if (miner[i].hasOwnProperty("seconds")) {
+              miner[i] = (miner[i].minutes) * (60) + miner[i].seconds;
+            } else {
+              miner[i] = (miner[i].minutes) * (60)
+            }
+          } else {
+            miner[i] = miner[i].seconds;
+          }
+
+          if (avrs[i].hasOwnProperty("seconds")) {
+            if (avrs[i].hasOwnProperty("milliseconds")) {
+              avrs[i] = (avrs[i].seconds) + avrs[i].milliseconds/1000;
+            } else {
+              avrs[i] = (avrs[i].seconds);
+            }
+          } else {
+            avrs[i] = avrs[i].milliseconds/1000;
+          }
+
+          try {
+            if (stder[i].hasOwnProperty("seconds")) {
+              if (stder[i].hasOwnProperty("milliseconds")) {
+                stder[i] = (stder[i].seconds) + stder[i].milliseconds/1000;
+              } else {
+                stder[i] = (stder[i].seconds);
+              }
+            } else {
+              stder[i] = stder[i].milliseconds/1000;
+            }
+          } catch {
+            
+          }
+      }
+      console.log(stder);
+
+      }
 
     render() {
       return ( 

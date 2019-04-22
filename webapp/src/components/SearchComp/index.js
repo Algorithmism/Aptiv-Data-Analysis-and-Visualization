@@ -12,6 +12,7 @@ import Tabler from '../GoogleComp/Tabler';
 import TableUsage from '../GoogleComp/table_app_usage';
 import All_Vehicles from '../GoogleComp/All_Vehicles';
 import Charter from '../ChartComp/chrts';
+import Liner from '../ChartComp/linechart';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
 import Candler from '../ChartComp/candlestick';
 import BarAverage from '../ChartComp/highchart';
@@ -52,7 +53,7 @@ const Cell = ({ toggle, name, height, description, css, maximized, holder }) => 
         <TableUsage postType={holder}/>
     }
     { name == "App State Changes" &&
-        <BarAverage postType={holder}/>
+        <Liner postType={holder}/>
     }
     { name == "App Usage" &&
         <Charter postType={holder}/>
@@ -161,7 +162,7 @@ class SearchComp extends Component {
               {this.state.events.map(event =>
                 <button key={event.name} onClick={() => this.handleRegionClick(event.name)}> {event.name} </button>
               )}
-              <button key="allcars"> All Vehicles </button>
+              <button key="allcars" onClick={() => this.handleRegionClick("allcars")}> All Vehicles </button>
               </div>
             )
             : (

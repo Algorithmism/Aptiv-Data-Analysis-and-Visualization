@@ -29,6 +29,7 @@ class PieCharter extends React.Component {
         }       
       }
 
+
       async componentDidMount() {
         let urler = '';
         let timer = [];
@@ -61,11 +62,11 @@ class PieCharter extends React.Component {
         }
 
         timer.sort();
-        console.log(timer);
+        //console.log(timer);
         if(timer.length != 0) {
-        this.setState({series : [timer[0], timer[10],timer[20],timer[30]] });
+        this.setState({series : [timer[0], timer[10],timer[20],timer[28],timer[32],timer[39]] });
         this.setState({ options: {
-          labels: [namers[0],namers[10],namers[20],namers[30]],
+          labels: [namers[0],namers[10],namers[20],namers[28],namers[32],namers[39]],
           responsive: [{
             breakpoint: 480,
             options: {
