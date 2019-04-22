@@ -24,8 +24,9 @@ class EventList extends React.Component{
     axios.get('http://localhost:8081/app_usages').then(response => {
       //console.log(response);
       this.setState({events: response.data})
+      console.log(response);
     });
-
+    
     /*
     this.state.events.map(event => {
       uses.push(event.uses);
