@@ -69,6 +69,41 @@ exports.seed = function (knex, Promise) {
         id: "08ba1e83-a429-4516-af8d-51c27ef4dd3e",
         name: "com.android.documentsui",
         version: "0.1"
+    },
+    {
+        id:"e877c1ef-c53e-44f3-aa62-bbefd7897f73",
+        name:"com.aptiv.hmi.referenceaudioapp",
+        version:"0.1"
+    },
+    {
+        id: "9004510c-4d43-4ba2-acc7-549190be2f15",
+        name:"com.android.settings",
+        version:"0.1"
+    },
+    {
+        id: "5f9ba8d2-bdbf-4008-af2e-1dbafe1f5be1",
+        name: "com.aptiv.hvac",
+        version: "0.1"
+    },
+    {
+        id: "6ed642ae-9b9a-4af2-b7ba-128cec8b2e21",
+        name: "com.aptiv.tuner",
+        version: "0.1"
+    },
+    {
+        id: "15f6ba44-c684-4636-b8eb-cd2069380dbb",
+        name: "com.android.music",
+        version: "0.1"
+    },
+    {
+        id: "85d43108-8d9b-4a66-9f87-702fd0f6cc55",
+        name: "com.aptiv.tts.ttsrefapp",
+        version: "0.1"
+    },
+    {
+        id: "b3a2e4b6-9018-4c84-92fa-e814fa5e538f",
+        name: "com.android.car.settings",
+        version: "0.1"
     }
 
       ]);
