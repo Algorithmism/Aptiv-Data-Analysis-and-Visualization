@@ -90,20 +90,6 @@ class MuiVirtualizedTable extends React.PureComponent {
   };
 
 
-  EventList(props){
-    this.props = props
-  }
-
-  state = {
-    events: [],
-  };
-
-  componentDidMount() {
-    axios.get('http://localhost:8081/summary_timeline').then(response => {
-      //console.log(response);
-      
-    });
-  }
 
   render() {
     const { classes, columns, ...tableProps } = this.props;
@@ -191,25 +177,86 @@ function createData(ApplicationName, TotalTime, Uses, MaxTime, MinTime, AverageT
 
 const rows = [];
 
+/*
 for (let i = 0; i < 200; i += 1) {
   const randomSelection = data[Math.floor(Math.random() * data.length)];
   console.log(randomSelection);
   rows.push(createData(...randomSelection));
 }
-/*
+*/
+
+const vals = [0,0,0,0,0,0,0];
 axios.get('http://localhost:8081/app_usages').then(response => {
+   
   response.data.map(event => {
-    let namer = "";
-    try {
-      namer = event.application.name;
-    } catch {
-      
+    
+    vals[0] = event.application_name;
+    vals[2] = event.uses;
+
+    if (event.total_time.hasOwnProperty("minutes")) {
+        if (event.total_time.hasOwnProperty("seconds")) {
+            vals[1] = (event.total_time.minutes) * (60) + event.total_time.seconds;
+        } else {
+            vals[1] = (event.total_time.minutes) * (60)
+        }
+      } else {
+        vals[1] = event.total_time.seconds;
     }
-    rows.push(createData(...[event.event_name,event.event,event.timestamp, event.vehicle.name, namer]));
+
+
+
+    if (event.max_time.hasOwnProperty("minutes")) {
+        if (event.max_time.hasOwnProperty("seconds")) {
+            vals[3] = (event.max_time.minutes) * (60) + event.max_time.seconds;
+        } else {
+            vals[3] = (event.max_time.minutes) * (60)
+        }
+      } else {
+        vals[3] = event.max_time.seconds;
+    }
+
+      if (event.min_time.hasOwnProperty("minutes")) {
+        if (event.min_time.hasOwnProperty("seconds")) {
+            vals[4] = (event.min_time.minutes) * (60) + event.min_time.seconds;
+        } else {
+            vals[4] = (event.min_time.minutes) * (60)
+        }
+      } else {
+        vals[4] = event.min_time.seconds;
+      }
+
+      if (event.avg_time.hasOwnProperty("minutes")) {
+        if (event.avg_time.hasOwnProperty("seconds")) {
+            vals[5] = (event.avg_time.minutes)*60 + event.avg_time.seconds;
+        } else {
+            vals[5] = (event.avg_time.minutes);
+        }
+      } else {
+        vals[5] = event.avg_time.seconds;
+      }
+
+      try {
+        if (event.std_dev.hasOwnProperty("seconds")) {
+          if (event.std_dev.hasOwnProperty("milliseconds")) {
+            vals[6] = (event.std_dev.seconds) + event.std_dev.milliseconds/1000;
+          } else {
+            vals[6] = (event.std_dev.seconds);
+          }
+        } else {
+            vals[6] = event.std_dev.milliseconds/1000;
+        }
+      } catch {
+        
+      }
+
+
+
+
+    rows.push(createData(...vals));
   })
 
 });
-*/
+
 function ReactVirtualizedTable() {
   return (
     <Paper style={{ height: 550, width: '100%' }}>
