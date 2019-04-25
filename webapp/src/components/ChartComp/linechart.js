@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts'
 import axios from 'axios';
 
 class LineChart extends React.Component {
-    
+
     constructor(props) {
       super(props);
 
@@ -31,7 +31,7 @@ class LineChart extends React.Component {
             curve: 'smooth'
           },
           title: {
-            text: 'Average High & Low Temperature',
+            text: 'Average Run Time Per Application',
             align: 'left'
           },
           grid: {
@@ -42,18 +42,18 @@ class LineChart extends React.Component {
             },
           },
           markers: {
-            
+
             size: 6
           },
           xaxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
             title: {
-              text: 'Month'
+              text: 'Application Name'
             }
           },
           yaxis: {
             title: {
-              text: 'Temperature'
+              text: 'Time (S)'
             },
             min: 0,
             max: 40
@@ -89,7 +89,7 @@ class LineChart extends React.Component {
       } else {
           urler = 'http://localhost:8081/app_usages';
       }
-     
+
       const response = await axios.get(urler);
       const events = response.data;
       const maxer = [];
@@ -155,7 +155,7 @@ class LineChart extends React.Component {
           curve: 'smooth'
         },
         title: {
-          text: 'Average High & Low Temperature',
+          text: 'Average Run Time Per Application',
           align: 'left'
         },
         grid: {
@@ -166,18 +166,18 @@ class LineChart extends React.Component {
           },
         },
         markers: {
-          
+
           size: 6
         },
         xaxis: {
           categories: names,
           title: {
-            text: 'Month'
+            text: 'Application Name'
           }
         },
         yaxis: {
           title: {
-            text: 'Temperature'
+            text: 'Time (S)'
           },
           min: 0,
           max: 40
