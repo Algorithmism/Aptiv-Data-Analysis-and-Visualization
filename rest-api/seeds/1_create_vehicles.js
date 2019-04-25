@@ -7,7 +7,7 @@ exports.seed = function (knex, Promise) {
       return knex("vehicles").insert([
         {
           id: "6f1c16d1-4ca8-4621-a72a-cb6add087151",
-          name: "Abram's Vehicle",
+          name: "Abrams Vehicle",
           created_at: "2019-01-08 13:22:18.293-05",
           updated_at: "2019-01-08 13:22:18.293-05"
         },
