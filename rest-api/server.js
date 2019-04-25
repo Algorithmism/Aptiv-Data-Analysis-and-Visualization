@@ -512,24 +512,21 @@ server.route({
          min(duration) as min_time,
          avg(duration) as avg_time,
          stddev_samp(duration_seconds)* interval '1 sec' as std_dev,
-         variance(duration_seconds) as variance,
-         date_trunc('day', timestamp ) as day,
-         date_trunc('week', timestamp ) as week,
-         date_trunc('month', timestamp ) as month,
-         date_trunc('year', timestamp ) as year
+         variance(duration_seconds) as variance
+
 
 
      from temp1
      where event_name = 'RESUMED'
          and lead_event = 'STOPPED'
-     group by
-                 rollup(vehicle_id, application_id, date_trunc('year', timestamp ), date_trunc('month', timestamp ), date_trunc('week', timestamp ), date_trunc('day', timestamp ))
-     order by year, month, week, day, vehicle_id, application_id;
+     group by vehicle_id, application_id
+     order by vehicle_id, application_id
+     ;
 `);
 
 const insert = await Vehicles
   .raw(`
-    select v.name as vehicle_name, a.name as application_name, total_time, uses, max_time, min_time, avg_time, std_dev, variance, day, week, month, year from usage_over_time
+    select distinct v.name as vehicle_name, a.name as application_name, total_time, uses, max_time, min_time, avg_time, std_dev, variance, day, week, month, year from usage_over_time
 
       join applications a on a.id = application_id
       join vehicles v on v.id = vehicle_id
