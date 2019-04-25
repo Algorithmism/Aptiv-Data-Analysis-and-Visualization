@@ -42,7 +42,7 @@ class PieCharter extends React.Component {
         }
         const response = await axios.get(urler);
         this.setState({events: response.data});
-        //console.log(response);
+        //console.log(response.data);
         this.state.events.map(event => {
           timer.push(event.total_time);
           namers.push(event.application_name);
@@ -64,9 +64,9 @@ class PieCharter extends React.Component {
         timer.sort();
         //console.log(timer);
         if(timer.length != 0) {
-        this.setState({series : [timer[0], timer[10],timer[20],timer[28],timer[32],timer[39]] });
+        this.setState({series : [timer[0], timer[1],timer[2],timer[3],timer[4],timer[5]] });
         this.setState({ options: {
-          labels: [namers[0],namers[10],namers[20],namers[28],namers[32],namers[39]],
+          labels: [namers[0],namers[1],namers[2],namers[3],namers[4],namers[5]],
           responsive: [{
             breakpoint: 480,
             options: {
@@ -103,13 +103,11 @@ class PieCharter extends React.Component {
         if(this.props.postType != this.state.holder) {
           this.componentDidMount();
           this.setState({holder: this.props.postType})
-  
         }
 
         return (
           <div id="chart">
             <Chart options={this.state.options} series={this.state.series} type="pie" width="600" />
-            
           </div>
   
 

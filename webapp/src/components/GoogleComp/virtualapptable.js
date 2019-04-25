@@ -35,6 +35,7 @@ const styles = theme => ({
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
+
   getRowClassName = ({ index }) => {
     const { classes, rowClassName, onRowClick } = this.props;
 
@@ -186,6 +187,8 @@ for (let i = 0; i < 200; i += 1) {
 */
 
 const vals = [0,0,0,0,0,0,0];
+
+
 axios.get('http://localhost:8081/app_usages').then(response => {
    
   response.data.map(event => {
