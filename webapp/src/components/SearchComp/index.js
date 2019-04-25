@@ -14,6 +14,7 @@ import All_Vehicles from '../GoogleComp/All_Vehicles';
 import Charter from '../ChartComp/chrts';
 import Liner from '../ChartComp/linechart';
 import ReactVirtualizedTable from '../GoogleComp/virtualTabler';
+import AppTable from '../GoogleComp/virtualapptable';
 import Candler from '../ChartComp/candlestick';
 import BarAverage from '../ChartComp/highchart';
 import RangeBar from '../ChartComp/rangebar';
@@ -46,11 +47,12 @@ const Cell = ({ toggle, name, height, description, css, maximized, holder }) => 
         </Slug>
       </div>
     </Fade>
+
     { name == "Timeline of Events" &&
-        <Tabler postType={holder}/>
+        <ReactVirtualizedTable postType={holder}/>
       }
     { name == "Combined App Usage Across Cars" &&
-        <TableUsage postType={holder}/>
+        <AppTable postType={holder}/>
     }
     { name == "App State Changes" &&
         <Liner postType={holder}/>
@@ -65,8 +67,8 @@ const Cell = ({ toggle, name, height, description, css, maximized, holder }) => 
     { name.toLowerCase() == "all active cars in system" &&
         <Candler postType={holder}/>
     }
-    <Fade
     
+    <Fade
       show={!maximized}
       from={{ opacity: 0, transform: 'translate3d(0,140px,0)' }}
       enter={{ opacity: 1, transform: 'translate3d(0,0px,0)' }}
@@ -170,6 +172,7 @@ class SearchComp extends Component {
             )
         }
       </div>
+      
         <Grid
           className="grid"
           // Arbitrary data, should contain keys, possibly heights, etc.

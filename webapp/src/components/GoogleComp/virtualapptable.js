@@ -184,20 +184,20 @@ const data = [
 ];
 
 let id = 0;
-function createData(EventName, Event, Timestamp, VehicleID, ApplicationID) {
+function createData(ApplicationName, TotalTime, Uses, MaxTime, MinTime, AverageTime, StandardDeviation) {
   id += 1;
-  return { id, EventName, Event, Timestamp, VehicleID, ApplicationID };
+  return { id, ApplicationName, TotalTime, Uses, MaxTime, MinTime,AverageTime,StandardDeviation  };
 }
 
 const rows = [];
-/*
+
 for (let i = 0; i < 200; i += 1) {
   const randomSelection = data[Math.floor(Math.random() * data.length)];
   console.log(randomSelection);
   rows.push(createData(...randomSelection));
 }
-*/
-axios.get('http://localhost:8081/summary_timeline').then(response => {
+/*
+axios.get('http://localhost:8081/app_usages').then(response => {
   response.data.map(event => {
     let namer = "";
     try {
@@ -209,7 +209,7 @@ axios.get('http://localhost:8081/summary_timeline').then(response => {
   })
 
 });
-
+*/
 function ReactVirtualizedTable() {
   return (
     <Paper style={{ height: 550, width: '100%' }}>
@@ -221,37 +221,51 @@ function ReactVirtualizedTable() {
           {
             width: 60,
             flexGrow: 0.8,
-            label: 'EventName',
-            dataKey: 'EventName',
+            label: 'ApplicationName',
+            dataKey: 'ApplicationName',
           },
           {
             width: 60,
             flexGrow: 0.2,
-            label: 'Event',
-            dataKey: 'Event',
+            label: 'Total Time',
+            dataKey: 'TotalTime',
             numeric: true,
           },
           {
             width: 60,
             flexGrow: 0.2,
-            label: 'Timestamp',
-            dataKey: 'Timestamp',
+            label: 'Uses',
+            dataKey: 'Uses',
             numeric: true,
           },
           {
             width: 60,
             flexGrow: 0.2,
-            label: 'VehicleID',
-            dataKey: 'VehicleID',
+            label: 'Max Time',
+            dataKey: 'MaxTime',
             numeric: true,
           },
           {
             width: 60,
             flexGrow: 0.2,
-            label: 'ApplicationID',
-            dataKey: 'ApplicationID',
+            label: 'Min Time',
+            dataKey: 'MinTime',
             numeric: true,
           },
+          {
+            width: 60,
+            flexGrow: 0.2,
+            label: 'Average Time',
+            dataKey: 'AverageTime',
+            numeric: true,
+          },
+          {
+            width: 60,
+            flexGrow: 0.2,
+            label: 'Standard Deviation',
+            dataKey: 'StandardDeviation',
+            numeric: true,
+          }
         ]}
       />
     </Paper>

@@ -78,7 +78,7 @@ class Candler extends React.Component {
         let avrs = [];
         let stder = [];
 
-        if(this.props.postType != "" || this.props.postType ==  "allcars") {
+        if(this.props.postType != "" && this.props.postType !=  "allcars") {
             urler = 'http://localhost:8081/app_usages'+ "/'"+ this.props.postType + "'";
             this.setState({holder: this.props.postType})
         } else {
@@ -86,7 +86,7 @@ class Candler extends React.Component {
         }
         const response = await axios.get(urler);
         this.setState({events: response.data});
-       console.log(response);
+       //console.log(urler);
 
         this.state.events.map(event => {
             maxer.push(event.max_time);
@@ -143,8 +143,8 @@ class Candler extends React.Component {
             
           }
         }
-        console.log(maxer);
-        console.log(avrs);
+        //console.log(maxer);
+        //console.log(avrs);
         let hold_vals = [];
 
         for(let i = 0; i < maxer.length; i++) 
