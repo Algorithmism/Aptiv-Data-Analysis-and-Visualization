@@ -176,7 +176,7 @@ function createData(ApplicationName, TotalTime, Uses, MaxTime, MinTime, AverageT
   return { id, ApplicationName, TotalTime, Uses, MaxTime, MinTime,AverageTime,StandardDeviation  };
 }
 
-const rows = [];
+
 
 /*
 for (let i = 0; i < 200; i += 1) {
@@ -186,86 +186,126 @@ for (let i = 0; i < 200; i += 1) {
 }
 */
 
-const vals = [0,0,0,0,0,0,0];
 
 
-axios.get('http://localhost:8081/app_usages').then(response => {
-   
-  response.data.map(event => {
+
+
+
+class ReactVirtualizedTable extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      holder : '',
+      rower: []
+    }
+
     
-    vals[0] = event.application_name;
-    vals[2] = event.uses;
+  }
 
-    if (event.total_time.hasOwnProperty("minutes")) {
-        if (event.total_time.hasOwnProperty("seconds")) {
-            vals[1] = (event.total_time.minutes) * (60) + event.total_time.seconds;
-        } else {
-            vals[1] = (event.total_time.minutes) * (60)
-        }
+  async componentDidMount() {
+    const rows = [];
+    const vals = [0,0,0,0,0,0,0];
+    let urler = '';
+    if(this.props.postType != "" ) {
+      if(this.props.postType !=  "allcars")
+      {
+        urler = 'http://localhost:8081/app_usages'+ "/'"+ this.props.postType + "'";
+        this.setState({holder: this.props.postType})
       } else {
-        vals[1] = event.total_time.seconds;
-    }
-
-
-
-    if (event.max_time.hasOwnProperty("minutes")) {
-        if (event.max_time.hasOwnProperty("seconds")) {
-            vals[3] = (event.max_time.minutes) * (60) + event.max_time.seconds;
-        } else {
-            vals[3] = (event.max_time.minutes) * (60)
-        }
-      } else {
-        vals[3] = event.max_time.seconds;
-    }
-
-      if (event.min_time.hasOwnProperty("minutes")) {
-        if (event.min_time.hasOwnProperty("seconds")) {
-            vals[4] = (event.min_time.minutes) * (60) + event.min_time.seconds;
-        } else {
-            vals[4] = (event.min_time.minutes) * (60)
-        }
-      } else {
-        vals[4] = event.min_time.seconds;
-      }
-
-      if (event.avg_time.hasOwnProperty("minutes")) {
-        if (event.avg_time.hasOwnProperty("seconds")) {
-            vals[5] = (event.avg_time.minutes)*60 + event.avg_time.seconds;
-        } else {
-            vals[5] = (event.avg_time.minutes);
-        }
-      } else {
-        vals[5] = event.avg_time.seconds;
-      }
-
-      try {
-        if (event.std_dev.hasOwnProperty("seconds")) {
-          if (event.std_dev.hasOwnProperty("milliseconds")) {
-            vals[6] = (event.std_dev.seconds) + event.std_dev.milliseconds/1000;
-          } else {
-            vals[6] = (event.std_dev.seconds);
-          }
-        } else {
-            vals[6] = event.std_dev.milliseconds/1000;
-        }
-      } catch {
+        urler = 'http://localhost:8081/app_usages';
         
       }
+    } else {
+        urler = 'http://localhost:8081/app_usages';
+    }  
+
+    
+    axios.get(urler).then(response => {
+      //console.log(response.data);
+    response.data.map(event => {
+      
+      vals[0] = event.application_name;
+      vals[2] = event.uses;
+
+      if (event.total_time.hasOwnProperty("minutes")) {
+          if (event.total_time.hasOwnProperty("seconds")) {
+              vals[1] = (event.total_time.minutes) * (60) + event.total_time.seconds;
+          } else {
+              vals[1] = (event.total_time.minutes) * (60)
+          }
+        } else {
+          vals[1] = event.total_time.seconds;
+      }
 
 
 
+      if (event.max_time.hasOwnProperty("minutes")) {
+          if (event.max_time.hasOwnProperty("seconds")) {
+              vals[3] = (event.max_time.minutes) * (60) + event.max_time.seconds;
+          } else {
+              vals[3] = (event.max_time.minutes) * (60)
+          }
+        } else {
+          vals[3] = event.max_time.seconds;
+      }
 
-    rows.push(createData(...vals));
-  })
+        if (event.min_time.hasOwnProperty("minutes")) {
+          if (event.min_time.hasOwnProperty("seconds")) {
+              vals[4] = (event.min_time.minutes) * (60) + event.min_time.seconds;
+          } else {
+              vals[4] = (event.min_time.minutes) * (60)
+          }
+        } else {
+          vals[4] = event.min_time.seconds;
+        }
 
-});
+        if (event.avg_time.hasOwnProperty("minutes")) {
+          if (event.avg_time.hasOwnProperty("seconds")) {
+              vals[5] = (event.avg_time.minutes)*60 + event.avg_time.seconds;
+          } else {
+              vals[5] = (event.avg_time.minutes);
+          }
+        } else {
+          vals[5] = event.avg_time.seconds;
+        }
 
-function ReactVirtualizedTable() {
+        try {
+          if (event.std_dev.hasOwnProperty("seconds")) {
+            if (event.std_dev.hasOwnProperty("milliseconds")) {
+              vals[6] = (event.std_dev.seconds) + event.std_dev.milliseconds/1000;
+            } else {
+              vals[6] = (event.std_dev.seconds);
+            }
+          } else {
+              vals[6] = event.std_dev.milliseconds/1000;
+          }
+        } catch {
+          
+        }
+
+
+      rows.push(createData(...vals));
+    })
+
+
+  });
+  this.setState({rower: rows})
+  }
+  
+render() { 
+  
+  if(this.props.postType != this.state.holder) {
+    this.componentDidMount();
+    this.setState({holder: this.props.postType})
+  }
+
   return (
     <Paper style={{ height: 550, width: '100%' }}>
       <WrappedVirtualizedTable
-        rowCount={rows.length}
-        rowGetter={({ index }) => rows[index]}
+        rowCount={this.state.rower.length}
+        rowGetter={({ index }) => this.state.rower[index]}
         onRowClick={event => console.log(event)}
         columns={[
           {
@@ -320,6 +360,8 @@ function ReactVirtualizedTable() {
       />
     </Paper>
   );
+    }
 }
 
-export default (ReactVirtualizedTable);
+
+export default ReactVirtualizedTable;

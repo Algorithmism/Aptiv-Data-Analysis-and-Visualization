@@ -161,7 +161,25 @@ class Candler extends React.Component {
             data: hold_vals
           }]
         })
+
+        this.setState({options: {
+          title: {
+            text: 'CandleStick Chart',
+            align: 'center'
+          },
+          xaxis: {
+            min: 0,
+            max: hold_vals.length
+          },
+          yaxis: {
+            tooltip: {
+              enabled: true
+            }
+          }
+        }})
       }
+
+      
 
     render() {
 

@@ -189,33 +189,66 @@ function createData(EventName, Event, Timestamp, VehicleID, ApplicationID) {
   return { id, EventName, Event, Timestamp, VehicleID, ApplicationID };
 }
 
-const rows = [];
-/*
-for (let i = 0; i < 200; i += 1) {
-  const randomSelection = data[Math.floor(Math.random() * data.length)];
-  console.log(randomSelection);
-  rows.push(createData(...randomSelection));
-}
-*/
-axios.get('http://localhost:8081/summary_timeline').then(response => {
-  response.data.map(event => {
-    let namer = "";
-    try {
-      namer = event.application.name;
-    } catch {
-      
+
+
+
+class ReactVirtualizedTable extends React.Component{
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      holder : '',
+      rower: []
     }
-    rows.push(createData(...[event.event_name,event.event,event.timestamp, event.vehicle.name, namer]));
-  })
 
-});
+    
+  }
 
-function ReactVirtualizedTable() {
+  async componentDidMount() {
+    const rows = [];
+    const vals = [0,0,0,0,0,0,0];
+    let urler = '';
+    if(this.props.postType != "" ) {
+      if(this.props.postType !=  "allcars")
+      {
+        urler = 'http://localhost:8081/summary_timeline'+ "/'"+ this.props.postType + "'";
+        this.setState({holder: this.props.postType})
+      } else {
+        urler = 'http://localhost:8081/summary_timeline';
+        
+      }
+    } else {
+        urler = 'http://localhost:8081/summary_timeline';
+    } 
+
+    axios.get(urler).then(response => {
+       console.log(response.data);
+    response.data.map(event => {
+      let namer = "";
+      try {
+        namer = event.application.name;
+      } catch {
+        
+      }
+      rows.push(createData(...[event.event_name,event.event,event.timestamp, event.vehicle.name, namer]));
+    })
+
+  });
+
+  this.setState({rower: rows})
+  } 
+  render () {
+
+    if(this.props.postType != this.state.holder) {
+      this.componentDidMount();
+      this.setState({holder: this.props.postType})
+    }
   return (
     <Paper style={{ height: 550, width: '100%' }}>
       <WrappedVirtualizedTable
-        rowCount={rows.length}
-        rowGetter={({ index }) => rows[index]}
+        rowCount={this.state.rower.length}
+        rowGetter={({ index }) => this.state.rower[index]}
         onRowClick={event => console.log(event)}
         columns={[
           {
@@ -256,6 +289,7 @@ function ReactVirtualizedTable() {
       />
     </Paper>
   );
+  }
 }
 
-export default (ReactVirtualizedTable);
+export default ReactVirtualizedTable;
